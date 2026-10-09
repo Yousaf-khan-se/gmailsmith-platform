@@ -2,10 +2,6 @@
 
 **Last updated: 2026**
 
-> **Note for the vendor:** template only, not legal advice. Have it reviewed and
-> set the governing-law jurisdiction before publishing. Host at
-> `branding.TERMS_URL`.
-
 These terms govern your purchase and use of GmailSmith ("the Software").
 By installing or using it you agree to them. If you do not agree, do not use
 the Software.

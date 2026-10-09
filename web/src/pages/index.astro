@@ -22,8 +22,7 @@ import { site, pricing } from '../site';
       </div>
       <p class="smarthint">
         Windows will show <strong>“Windows protected your PC”</strong> on first
-        run — it’s expected for a new, unsigned installer.
-        <a href="/install">Show me the two-click fix →</a>
+        run — it’s expected for a new, unsigned installer. <a href="/install">Show me the two-click fix →</a>
       </p>
     </div>
   </section>
@@ -38,8 +37,8 @@ import { site, pricing } from '../site';
       </div>
       <div>
         <h3>Two ways to connect</h3>
-        <p>Sign in with Google (send-only scope) or use a Gmail App Password.
-          No Google Cloud project, no DNS records, no SPF/DKIM ceremony.</p>
+        <p>One-click Google sign-in or a Gmail App Password — connect your
+          existing Gmail and start sending. Nothing else to set up.</p>
       </div>
       <div>
         <h3>Live campaign tracking</h3>
@@ -71,7 +70,7 @@ import { site, pricing } from '../site';
               class:list={['btn', 'btn-block', tier.featured ? 'btn-primary' : 'btn-secondary']}
               href={site.purchaseUrl || '#pricing'}
               aria-disabled={site.purchaseUrl ? undefined : 'true'}
-              title={site.purchaseUrl ? undefined : 'Checkout link lands here once the store is live (docs/08 §8.4)'}
+              title={site.purchaseUrl ? undefined : 'Checkout opens at launch'}
             >
               {tier.cta}
             </a>
@@ -79,9 +78,7 @@ import { site, pricing } from '../site';
         ))}
       </div>
       {!site.purchaseUrl && (
-        <p class="store-note">Checkout goes live when the Lemon Squeezy
-          store is connected — see the launch checklist in
-          <code>docs/08 §8.4</code>.</p>
+        <p class="store-note">Checkout opens at launch — until then, start the free trial.</p>
       )}
     </div>
   </section>
@@ -97,15 +94,15 @@ import { site, pricing } from '../site';
             version) is used for sign-in, updates and support.</p>
         </details>
         <details>
-          <summary>Do I need a Google Cloud project?</summary>
-          <p>No. The app ships with its own verified Google client for the
-            one-click sign-in, and the App Password method needs no Google
-            Cloud at all.</p>
+          <summary>Do I need to configure anything?</summary>
+          <p>No. Sign in with Google in one click, or use a Gmail App Password
+            if you prefer — either way you’re sending your first campaign in
+            minutes.</p>
         </details>
         <details>
           <summary>What about Windows SmartScreen warnings?</summary>
-          <p>The installer isn’t code-signed yet, so the warning is expected.
-            <a href="/install">This page</a> shows the exact two clicks to
+          <p>The installer isn’t code-signed yet, so the warning is expected. <a
+            href="/install">This page</a> shows the exact two clicks to
             proceed safely.</p>
         </details>
       </div>

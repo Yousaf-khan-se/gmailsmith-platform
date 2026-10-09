@@ -2,11 +2,6 @@
 
 **Last updated: 2026**
 
-> **Note for the vendor:** this policy describes what the software actually
-> does, which is the hard part. Review it with a solicitor and set the
-> jurisdiction and contact details before publishing. Host it at the URL in
-> `branding.PRIVACY_URL`.
-
 ## The short version
 
 GmailSmith runs entirely on your own computer. Your recipient lists, email
