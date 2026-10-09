@@ -112,5 +112,5 @@ same URL with a new date.
 
 ## Contact
 
-**Email:** support@gmail.smith.app
-**Website:** https://gmail.smith.app
+**Email:** support@gmailsmith.app
+**Website:** https://gmailsmith.app

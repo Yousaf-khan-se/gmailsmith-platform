@@ -4,12 +4,12 @@
 // a disabled state instead of pointing buyers nowhere.
 export const site = {
   name: 'GmailSmith',
-  url: 'https://gmail.smith.app',
+  url: 'https://gmailsmith.app',
   tagline: 'Desktop mail merge for Gmail',
   description:
     'Send personalised email campaigns from your own Gmail. Your recipient ' +
     'lists never leave your laptop — no cloud, no middleman, no subscription.',
-  supportEmail: 'support@gmail.smith.app',
+  supportEmail: 'support@gmailsmith.app',
   purchaseUrl: '',
   version: '1.0.0',
   releases: {
