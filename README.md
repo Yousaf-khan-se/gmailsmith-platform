@@ -10,7 +10,8 @@ the decision record in `docs/11` §11.3.
 | `releases-upload/` | Script pushing `dist/` artifacts (installer, `latest.json`, `SHA256SUMS.txt`) to Cloudflare R2 after `tools/build.py` | `gmail-merge/docs/08` §8.1, §8.6 |
 | `functions/` | Reserved — Lemon Squeezy → account webhook (Phase P6) | `gmail-merge/docs/11` §11.8 |
 
-**Stack:** Astro (static) on Cloudflare Pages · installer on R2 behind
+**Stack:** Astro (static) on Cloudflare — deployed as a **static-asset
+Worker** (Workers Builds + `web/wrangler.jsonc`) · installer on R2 behind
 `/releases/*` (Worker 302) · auth by Google Firebase Authentication — the
 *account* system lives in the app repo's `auth_client.py`, not here.
 `web/src/firebaseWebConfig.ts` holds the **public** Firebase web config
@@ -21,7 +22,7 @@ the decision record in `docs/11` §11.3.
 ```bash
 npm install      # first run
 npm run dev      # local preview
-npm run build    # emits dist/ — what Pages serves
+npm run build    # emits dist/ — what wrangler uploads
 ```
 
 **Release uploads (from `releases-upload/`):**
