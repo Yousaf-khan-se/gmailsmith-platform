@@ -1,0 +1,10 @@
+{
+  "name": "gmailsmith-releases",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-09",
+  "workers_dev": false,
+  "routes": [{ "pattern": "gmailsmith.app/releases/*" }],
+  "r2_buckets": [
+    { "binding": "RELEASES", "bucket_name": "gmailsmith-releases" }
+  ]
+}

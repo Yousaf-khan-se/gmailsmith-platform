@@ -12,7 +12,7 @@ the decision record in `docs/11` §11.3.
 
 **Stack:** Astro (static) on Cloudflare — deployed as a **static-asset
 Worker** (Workers Builds + `web/wrangler.jsonc`) · installer on R2 behind
-`/releases/*` (Worker 302) · auth by Google Firebase Authentication — the
+`/releases/*` (Worker + R2 binding) · auth by Google Firebase Authentication — the
 *account* system lives in the app repo's `auth_client.py`, not here.
 `web/src/firebaseWebConfig.ts` holds the **public** Firebase web config
 (by-design values; API-key restrictions in the GCP console are the control).

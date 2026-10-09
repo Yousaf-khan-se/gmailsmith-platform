@@ -7,9 +7,10 @@ Run after ``python tools/build.py`` in the app repo::
     python upload_release.py --dist ../../gmail-merge/dist
 
 Uploads the installer ``.exe``, ``latest.json`` and ``SHA256SUMS.txt`` from
-the given dist directory. The site's ``/releases/*`` Worker 302-redirects to
-these objects, so the download-page snippet in docs/08 §8.1 keeps using
-relative ``/releases/`` URLs unchanged.
+the given dist directory. The ``/releases/*`` Worker serves these objects
+straight from the bucket through its R2 binding (private bucket, no public
+URL), so the download-page snippet in docs/08 §8.1 keeps using relative
+``/releases/`` URLs unchanged.
 
 Credentials come from the environment only (never committed):
     R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY
