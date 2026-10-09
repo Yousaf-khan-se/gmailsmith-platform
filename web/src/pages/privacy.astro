@@ -1,0 +1,35 @@
+---
+// Privacy policy — rendered from src/content/legal/privacy-policy.md
+// (copied from gmail-merge/docs/legal/, the source of truth).
+import Base from '../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+const entry = (await getCollection('legal'))
+  .find((item) => item.id === 'privacy-policy');
+if (!entry) throw new Error('privacy-policy.md missing from src/content/legal');
+const { Content } = await render(entry);
+---
+
+<Base title="Privacy Policy" path="/privacy"
+      description="What stays on your machine, what leaves it and when, and your data-subject rights.">
+  <article class="container doc">
+    <Content />
+  </article>
+  <style is:global>
+    .doc { max-width: 760px; padding: 56px 24px; }
+    .doc h1 { font-size: clamp(26px, 4vw, 36px); margin: 0 0 18px; }
+    .doc h2 { font-size: 21px; margin-top: 34px; }
+    .doc h3 { font-size: 17px; margin-top: 24px; }
+    .doc p, .doc li { color: var(--text-muted); font-size: 15px; }
+    .doc strong { color: var(--text); }
+    .doc blockquote {
+      border-left: 3px solid var(--accent); margin: 16px 0;
+      padding: 4px 16px; color: var(--text-dim); background: var(--surface);
+      border-radius: 0 8px 8px 0;
+    }
+    .doc code {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 5px; padding: 1px 6px; font-size: 0.92em;
+    }
+  </style>
+</Base>

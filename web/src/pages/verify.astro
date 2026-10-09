@@ -1,0 +1,51 @@
+---
+// Firebase action page: completes the VERIFY_EMAIL code from the
+// verification email (docs/11 §11.5 — action URL configured in the
+// Firebase console templates to point here, P5 checklist).
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Verify your email" path="/verify">
+  <article class="container doc">
+    <h1>Verify your email</h1>
+    <p id="verifyStatus" role="status">Checking the verification link…</p>
+  </article>
+
+  <style>
+    .doc { max-width: 640px; padding: 72px 24px; }
+    h1 { font-size: 30px; margin: 0 0 14px; }
+    #verifyStatus { color: var(--text-muted); font-size: 15.5px; }
+    #verifyStatus.ok { color: var(--green); font-weight: 600; }
+    #verifyStatus.bad { color: #f87171; }
+  </style>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getAuth, applyActionCode } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+    import { firebaseWebConfig } from '../firebaseWebConfig';
+
+    const status = document.getElementById('verifyStatus');
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get('mode');
+    const oobCode = params.get('oobCode');
+
+    async function verify() {
+      if (mode !== 'verifyEmail') {
+        throw new Error('This link is not a verification link. Open the link from your inbox instead.');
+      }
+      if (!oobCode) {
+        throw new Error('The link is missing its code — request a new verification email from the app.');
+      }
+      const app = initializeApp(firebaseWebConfig);
+      await applyActionCode(getAuth(app), oobCode);
+      status.textContent = 'Verified! You can close this page and return to GmailSmith.';
+      status.classList.add('ok');
+    }
+
+    verify().catch((err) => {
+      status.textContent = err.message
+        || 'That link no longer works — request a new verification email from the app.';
+      status.classList.add('bad');
+    });
+  </script>
+</Base>

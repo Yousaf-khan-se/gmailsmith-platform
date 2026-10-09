@@ -1,0 +1,91 @@
+---
+// Firebase action page: sets a new password from the PASSWORD_RESET email
+// (docs/11 §11.5 — action URL configured in the Firebase console).
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Reset your password" path="/reset">
+  <article class="container doc">
+    <h1>Reset your password</h1>
+    <p id="resetStatus" role="status">Checking the reset link…</p>
+    <p id="resetWho" class="who"></p>
+    <form id="resetForm" style="display:none">
+      <label>New password <span class="dim">(8+ characters)</span></label>
+      <input id="resetPass1" type="password" autocomplete="new-password" required minlength="8" />
+      <label>Repeat the new password</label>
+      <input id="resetPass2" type="password" autocomplete="new-password" required minlength="8" />
+      <div id="resetError" class="error"></div>
+      <button class="btn btn-primary" type="submit" id="resetBtn">Set new password</button>
+    </form>
+  </article>
+
+  <style>
+    .doc { max-width: 640px; padding: 72px 24px; }
+    h1 { font-size: 30px; margin: 0 0 14px; }
+    #resetStatus { color: var(--text-muted); font-size: 15.5px; }
+    .who { color: var(--text); font-weight: 600; margin: 4px 0 18px; }
+    form { display: flex; flex-direction: column; gap: 8px; max-width: 380px; }
+    label { font-size: 13.5px; color: var(--text-muted); margin-top: 8px; }
+    .dim { color: var(--text-dim); }
+    input {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text); font-size: 15px;
+      padding: 10px 12px;
+    }
+    input:focus { outline: none; border-color: var(--accent); }
+    .error { color: #f87171; font-size: 13.5px; min-height: 18px; }
+    button { margin-top: 10px; }
+  </style>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getAuth, confirmPasswordReset, verifyPasswordResetCode }
+      from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+    import { firebaseWebConfig } from '../firebaseWebConfig';
+
+    const status = document.getElementById('resetStatus');
+    const who = document.getElementById('resetWho');
+    const form = document.getElementById('resetForm');
+    const error = document.getElementById('resetError');
+    const button = document.getElementById('resetBtn');
+    const oobCode = new URLSearchParams(window.location.search).get('oobCode');
+    const app = initializeApp(firebaseWebConfig);
+    const auth = getAuth(app);
+
+    async function check() {
+      if (!oobCode) {
+        throw new Error('The link is missing its code — request a new reset email from the app.');
+      }
+      const email = await verifyPasswordResetCode(auth, oobCode);
+      who.textContent = email;
+      status.textContent = 'Choose a new password for:';
+      form.style.display = 'flex';
+    }
+
+    check().catch((err) => {
+      status.textContent = err.message
+        || 'That link no longer works — request a new reset email from the app.';
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      error.textContent = '';
+      const pass1 = document.getElementById('resetPass1').value;
+      const pass2 = document.getElementById('resetPass2').value;
+      if (pass1 !== pass2) {
+        error.textContent = 'The two passwords do not match.';
+        return;
+      }
+      button.disabled = true;
+      try {
+        await confirmPasswordReset(auth, oobCode, pass1);
+        status.textContent = 'Password updated! Return to GmailSmith and sign in.';
+        who.textContent = '';
+        form.style.display = 'none';
+      } catch (err) {
+        error.textContent = err.message || 'Could not update the password — try a new reset email.';
+        button.disabled = false;
+      }
+    });
+  </script>
+</Base>

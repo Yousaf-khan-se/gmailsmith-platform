@@ -6,13 +6,15 @@ the decision record in `docs/11` §11.3.
 
 | Folder | Contents | Spec |
 | :--- | :--- | :--- |
-| `web/` | Astro static site: landing, download, `/install`, pricing, legal, `/verify` + `/reset` (Firebase action pages), future blog/docs | `gmail-merge/docs/08-website-distribution.md` (§8.1, §8.6) + `docs/11` §11.6 |
+| `web/` | Astro site — landing with `latest.json`-driven download + pricing, `/install` (SmartScreen guide), `/verify` + `/reset` (Firebase action pages), `/privacy` + `/terms` (rendered from `src/content/legal/`, copied from the app repo's `docs/legal/` — that remains the source of truth), 404, robots + sitemap | `gmail-merge/docs/08` (§8.1, §8.6) + `docs/11` §11.6 |
 | `releases-upload/` | Script pushing `dist/` artifacts (installer, `latest.json`, `SHA256SUMS.txt`) to Cloudflare R2 after `tools/build.py` | `gmail-merge/docs/08` §8.1, §8.6 |
 | `functions/` | Reserved — Lemon Squeezy → account webhook (Phase P6) | `gmail-merge/docs/11` §11.8 |
 
 **Stack:** Astro (static) on Cloudflare Pages · installer on R2 behind
 `/releases/*` (Worker 302) · auth by Google Firebase Authentication — the
 *account* system lives in the app repo's `auth_client.py`, not here.
+`web/src/firebaseWebConfig.ts` holds the **public** Firebase web config
+(by-design values; API-key restrictions in the GCP console are the control).
 
 **Commands (from `web/`):**
 

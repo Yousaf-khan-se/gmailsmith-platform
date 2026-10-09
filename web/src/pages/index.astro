@@ -1,54 +1,208 @@
 ---
-// Session 1 scaffold only — Session 2 replaces this with the full landing +
-// download page per docs/08 §8.1 (latest.json-driven button, SmartScreen
-// guide, pricing, legal links).
-const title = 'GmailSmith — Desktop mail merge for Gmail';
-const description =
-  'Send personalised email campaigns from your own Gmail. Your lists never leave your laptop.';
+// Landing + download + pricing. The download button is driven by
+// /releases/latest.json exactly as docs/08 §8.1 prescribes — a page that
+// advertises a build which does not exist is worse than no page at all.
+import Base from '../layouts/Base.astro';
+import { site, pricing } from '../site';
 ---
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <meta name="robots" content="noindex" />
-    <link rel="canonical" href="https://gmailsmith.com/" />
-    <style>
-      :root {
-        --bg: #100e0b;
-        --text: #f3ede2;
-        --text-dim: #a69f91;
-        --accent: #f5a623;
-      }
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-        background: var(--bg);
-        color: var(--text);
-        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-        text-align: center;
-        padding: 2rem;
-      }
-      h1 { font-size: clamp(1.8rem, 5vw, 3rem); margin-bottom: 0.5rem; }
-      p { color: var(--text-dim); max-width: 40rem; line-height: 1.6; }
-      .tag { color: var(--accent); font-size: 0.85rem; letter-spacing: 0.12em;
-             text-transform: uppercase; }
-    </style>
-  </head>
-  <body>
-    <main>
-      <p class="tag">Under construction</p>
-      <h1>GmailSmith</h1>
-      <p>{description}</p>
-      <p>
-        The full site — download, pricing, install guide and legal pages —
-        lands in Session 2.
+
+<Base title={site.name} path="/">
+  <section style="padding: 88px 0 64px;">
+    <div class="container hero">
+      <p class="eyebrow">Desktop app for Windows</p>
+      <h1>Mail merge for Gmail that <em>never uploads your list</em></h1>
+      <p class="lede">
+        GmailSmith sends personalised campaigns straight from your own Gmail
+        account. Recipient data and message content stay on your laptop —
+        there is no cloud database, no middleman, and no monthly fee.
       </p>
-    </main>
-  </body>
-</html>
+      <div id="download" class="download-row">
+        <a id="downloadBtn" class="btn btn-primary btn-lg" href="#">Download for Windows</a>
+        <p id="downloadMeta" class="download-meta">Fetching the latest release…</p>
+      </div>
+      <p class="smarthint">
+        Windows will show <strong>“Windows protected your PC”</strong> on first
+        run — it’s expected for a new, unsigned installer.
+        <a href="/install">Show me the two-click fix →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="container feature-grid">
+      <div>
+        <h3>Your data stays put</h3>
+        <p>CSVs, contacts and message content live in your app data folder.
+          Only the emails you send leave your machine — through your own
+          Gmail, with Google’s deliverability.</p>
+      </div>
+      <div>
+        <h3>Two ways to connect</h3>
+        <p>Sign in with Google (send-only scope) or use a Gmail App Password.
+          No Google Cloud project, no DNS records, no SPF/DKIM ceremony.</p>
+      </div>
+      <div>
+        <h3>Live campaign tracking</h3>
+        <p>Progress bar, per-recipient results, retries on Gmail throttling,
+          opt-out list, and a full history you can export to CSV.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" style="padding: 72px 0;">
+    <div class="container">
+      <h2 class="section-title">One-time pricing. No subscription.</h2>
+      <p class="section-sub">
+        “Buy it once. No monthly fee, and your client list never leaves your
+        laptop.”
+      </p>
+      <div class="pricing-grid">
+        {pricing.map((tier) => (
+          <div class:list={['price-card', { featured: tier.featured }]}>
+            {tier.featured && <span class="badge">Most popular</span>}
+            <h3>{tier.name}</h3>
+            <p class="price">{tier.price}</p>
+            <p class="period">{tier.period} · {tier.devices}</p>
+            <p class="blurb">{tier.blurb}</p>
+            <ul>
+              {tier.features.map((f) => <li>{f}</li>)}
+            </ul>
+            <a
+              class:list={['btn', 'btn-block', tier.featured ? 'btn-primary' : 'btn-secondary']}
+              href={site.purchaseUrl || '#pricing'}
+              aria-disabled={site.purchaseUrl ? undefined : 'true'}
+              title={site.purchaseUrl ? undefined : 'Checkout link lands here once the store is live (docs/08 §8.4)'}
+            >
+              {tier.cta}
+            </a>
+          </div>
+        ))}
+      </div>
+      {!site.purchaseUrl && (
+        <p class="store-note">Checkout goes live when the Lemon Squeezy
+          store is connected — see the launch checklist in
+          <code>docs/08 §8.4</code>.</p>
+      )}
+    </div>
+  </section>
+
+  <section class="band faq-band">
+    <div class="container" style="text-align:center;">
+      <h2 class="section-title">Questions, answered</h2>
+      <div class="faq">
+        <details>
+          <summary>Does my recipient data ever reach your servers?</summary>
+          <p>No. There are no GmailSmith servers holding your lists — the app
+            runs entirely on your computer. Only your account identity (email,
+            version) is used for sign-in, updates and support.</p>
+        </details>
+        <details>
+          <summary>Do I need a Google Cloud project?</summary>
+          <p>No. The app ships with its own verified Google client for the
+            one-click sign-in, and the App Password method needs no Google
+            Cloud at all.</p>
+        </details>
+        <details>
+          <summary>What about Windows SmartScreen warnings?</summary>
+          <p>The installer isn’t code-signed yet, so the warning is expected.
+            <a href="/install">This page</a> shows the exact two clicks to
+            proceed safely.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .hero { text-align: center; max-width: 780px; }
+    .eyebrow {
+      color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em;
+      font-size: 12.5px; font-weight: 700; margin: 0 0 14px;
+    }
+    h1 {
+      font-size: clamp(30px, 5.4vw, 52px); line-height: 1.12; margin: 0 0 18px;
+      letter-spacing: -0.02em;
+    }
+    h1 em { color: var(--accent); font-style: normal; }
+    .lede { color: var(--text-muted); font-size: 17px; margin: 0 auto 32px; max-width: 620px; }
+    .download-row { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .btn-lg { padding: 15px 34px; font-size: 16.5px; }
+    .download-meta { color: var(--text-dim); font-size: 13.5px; margin: 0; min-height: 20px; }
+    .smarthint {
+      margin-top: 26px; font-size: 13.5px; color: var(--text-dim);
+      max-width: 560px; margin-inline: auto;
+    }
+    .band { background: var(--surface); border-block: 1px solid var(--border); }
+    .feature-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 32px; padding: 52px 24px;
+    }
+    .feature-grid h3 { margin: 0 0 8px; font-size: 17px; }
+    .feature-grid p { margin: 0; color: var(--text-muted); font-size: 14.5px; }
+    .section-title { text-align: center; font-size: clamp(24px, 3.4vw, 34px); margin: 0 0 8px; }
+    .section-sub {
+      text-align: center; color: var(--text-muted); max-width: 560px;
+      margin: 0 auto 40px;
+    }
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 22px; align-items: stretch;
+    }
+    .price-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 26px 24px; position: relative;
+      display: flex; flex-direction: column;
+    }
+    .price-card.featured { border-color: var(--accent); }
+    .badge {
+      position: absolute; top: -11px; left: 20px; background: var(--accent);
+      color: var(--accent-ink); font-size: 11.5px; font-weight: 700;
+      padding: 3px 10px; border-radius: 99px; text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .price-card h3 { margin: 4px 0 2px; font-size: 17px; }
+    .price { font-size: 38px; font-weight: 800; margin: 6px 0 0; }
+    .period { color: var(--text-dim); font-size: 13px; margin: 2px 0 12px; }
+    .blurb { color: var(--text-muted); font-size: 14px; margin: 0 0 14px; }
+    .price-card ul { margin: 0 0 20px; padding-left: 18px; color: var(--text-muted); font-size: 14px; }
+    .price-card li { margin-bottom: 5px; }
+    .btn-block { width: 100%; margin-top: auto; }
+    .store-note {
+      text-align: center; color: var(--text-dim); font-size: 13px;
+      margin-top: 22px;
+    }
+    .store-note code { color: var(--text-muted); }
+    .faq { max-width: 640px; margin: 26px auto 0; text-align: left; }
+    .faq details {
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 18px; margin-bottom: 12px; background: var(--surface2);
+    }
+    .faq summary { cursor: pointer; font-weight: 600; font-size: 15px; }
+    .faq p { color: var(--text-muted); font-size: 14.5px; margin: 10px 0 0; }
+  </style>
+
+  <script>
+    // docs/08 §8.1: the manifest drives the button; never hard-code a build.
+    fetch('/releases/latest.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((release) => {
+        const file = release && release.installer;
+        if (!file) throw new Error('no installer in manifest');
+        const btn = document.getElementById('downloadBtn');
+        const meta = document.getElementById('downloadMeta');
+        if (!btn || !meta) return;
+        btn.href = '/releases/' + file.filename;
+        btn.textContent = 'Download GmailSmith ' + release.version;
+        meta.textContent =
+          (file.bytes / 1048576).toFixed(1) +
+          ' MB · SHA-256 ' + file.sha256.slice(0, 16) + '…';
+      })
+      .catch(() => {
+        const meta = document.getElementById('downloadMeta');
+        if (meta) {
+          meta.textContent =
+            'Release manifest unavailable — try again in a moment.';
+        }
+      });
+  </script>
+</Base>
+

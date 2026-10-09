@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site';
+---
+
+<Base title="Page not found" path="/404"
+      description="This page does not exist.">
+  <section class="container nf">
+    <p class="code">404</p>
+    <h1>That page doesn’t exist</h1>
+    <p>The download is on the <a href="/">front page</a>, and install help
+      lives at <a href="/install">/install</a>.</p>
+    <p class="dim">Support: <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a></p>
+  </section>
+  <style>
+    .nf { text-align: center; padding: 96px 24px; }
+    .code { font-size: 64px; font-weight: 800; color: var(--accent); margin: 0; }
+    h1 { font-size: 26px; margin: 8px 0 16px; }
+    .dim { color: var(--text-dim); font-size: 14px; margin-top: 28px; }
+  </style>
+</Base>
