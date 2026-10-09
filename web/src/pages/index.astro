@@ -1,0 +1,54 @@
+---
+// Session 1 scaffold only — Session 2 replaces this with the full landing +
+// download page per docs/08 §8.1 (latest.json-driven button, SmartScreen
+// guide, pricing, legal links).
+const title = 'GmailSmith — Desktop mail merge for Gmail';
+const description =
+  'Send personalised email campaigns from your own Gmail. Your lists never leave your laptop.';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="https://gmailsmith.com/" />
+    <style>
+      :root {
+        --bg: #100e0b;
+        --text: #f3ede2;
+        --text-dim: #a69f91;
+        --accent: #f5a623;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        text-align: center;
+        padding: 2rem;
+      }
+      h1 { font-size: clamp(1.8rem, 5vw, 3rem); margin-bottom: 0.5rem; }
+      p { color: var(--text-dim); max-width: 40rem; line-height: 1.6; }
+      .tag { color: var(--accent); font-size: 0.85rem; letter-spacing: 0.12em;
+             text-transform: uppercase; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="tag">Under construction</p>
+      <h1>GmailSmith</h1>
+      <p>{description}</p>
+      <p>
+        The full site — download, pricing, install guide and legal pages —
+        lands in Session 2.
+      </p>
+    </main>
+  </body>
+</html>

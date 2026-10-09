@@ -1,0 +1,2 @@
+# R2 speaks the S3 API; boto3 is the Python-only client for upload_release.py.
+boto3>=1.34

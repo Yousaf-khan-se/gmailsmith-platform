@@ -1,0 +1,19 @@
+# Dependencies / build output
+node_modules/
+dist/
+.astro/
+
+# Secrets — R2 credentials and anything similar never enter Git
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Editor / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
