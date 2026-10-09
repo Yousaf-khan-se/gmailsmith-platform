@@ -25,7 +25,7 @@ before paying. No payment details are required to start it.
 
 ## 3. Pricing and payment
 
-Prices are shown at https://gmailsmith.com before purchase, in US dollars.
+Prices are shown at https://gmail.smith.app before purchase, in US dollars.
 Payment is processed by our merchant of record (Lemon Squeezy or Paddle), who is
 the seller of record for the transaction and handles applicable sales tax, VAT
 and GST.
@@ -114,5 +114,5 @@ the courts of that jurisdiction have exclusive jurisdiction over any dispute.
 
 ## 13. Contact
 
-**Email:** support@gmailsmith.com
-**Website:** https://gmailsmith.com
+**Email:** support@gmail.smith.app
+**Website:** https://gmail.smith.app

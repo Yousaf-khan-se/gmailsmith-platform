@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gmailsmith.com/sitemap-index.xml
+Sitemap: https://gmail.smith.app/sitemap-index.xml

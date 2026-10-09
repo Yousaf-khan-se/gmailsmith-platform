@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 // the /releases/* Worker (see docs/08 §8.6).
 export default defineConfig({
   output: 'static',
-  site: 'https://gmailsmith.com',
+  site: 'https://gmail.smith.app',
   trailingSlash: 'ignore',
   integrations: [sitemap()],
 });
