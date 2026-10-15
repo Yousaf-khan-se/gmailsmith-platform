@@ -13,18 +13,24 @@ agreement shipped with the installer (`LICENSE`) governs the licence grant,
 restrictions and warranty position; these terms cover the commercial
 relationship.
 
-## 2. Free trial
+## 2. Free plan
 
-The Software includes a free trial limited in both duration and daily sending
-volume. It is provided so you can confirm the Software works for your use case
-before paying. No payment details are required to start it.
+The Software includes a permanent Free plan with a modest daily sending limit.
+It is provided so you can confirm the Software works for your use case for as
+long as you like. No payment details are required to use it.
 
 ## 3. Pricing and payment
 
-Prices are shown at https://gmailsmith.app before purchase, in US dollars.
-Payment is processed by our merchant of record (Lemon Squeezy or Paddle), who is
-the seller of record for the transaction and handles applicable sales tax, VAT
-and GST.
+Prices are shown at https://gmailsmith.app before purchase, in US dollars, as
+monthly or yearly subscriptions (yearly is billed once per year at a discount
+against the monthly price). Payment is processed by our merchant of record
+(Lemon Squeezy or Paddle), who is the seller of record for the transaction and
+handles applicable sales tax, VAT and GST.
+
+Paid plans renew automatically at the end of each billing period until
+cancelled. Cancelling stops the next renewal — you keep the paid features until
+the period ends, after which the Software continues on the Free plan. We will
+notify existing subscribers at least 30 days before a price change takes effect.
 
 ## 4. Licence keys and activation
 
@@ -39,9 +45,10 @@ and GST.
 Because the Software can be evaluated free of charge before purchase, and
 because it is delivered digitally and cannot be returned, purchases are final.
 
-If the Software does not work as described, contact support within 30 days and
-we will attempt to resolve the problem in good faith, or refund the purchase if
-we cannot.
+Subscription refunds are handled by the merchant of record under its own
+subscription refund policy. If a store-level refund was refused and the Software
+did not work as described, contact support within 30 days and we will attempt to
+resolve the problem in good faith, or refund the subscription if we cannot.
 
 This does not affect any statutory rights you may have.
 
@@ -71,7 +78,7 @@ Disabling or circumventing them is at your own risk.
 
 ## 8. Updates and support
 
-- Your licence includes updates to the major version you purchased (1.x).
+- Updates and support are provided while your subscription is active.
 - Support is provided by email at the address below. Response times are
   best-effort, not guaranteed.
 - We may change or discontinue features in future versions. We will not remove

@@ -40,7 +40,8 @@ Gmail yourself. This is the entire point of the software.
 
 When you activate a licence key, the application sends that key and a randomly
 generated installation identifier to the store you bought from (Lemon Squeezy
-or Gumroad). It re-checks periodically. No personal data, recipient data or
+or Gumroad). It re-checks periodically; the response determines your plan
+status (Free, Personal or Agency). No personal data, recipient data or
 message content is included.
 
 If the store cannot be reached, the application keeps working for at least
