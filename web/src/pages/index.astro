@@ -14,7 +14,8 @@ import { site, pricing } from '../site';
       <p class="lede">
         GmailSmith sends personalised campaigns straight from your own Gmail
         account. Recipient data and message content stay on your laptop —
-        there is no cloud database, no middleman, and no monthly fee.
+        there is no cloud database and no middleman. Send free — upgrade only
+        when you need the volume.
       </p>
       <div id="download" class="download-row">
         <a id="downloadBtn" class="btn btn-primary btn-lg" href="#">Download for Windows</a>
@@ -50,10 +51,10 @@ import { site, pricing } from '../site';
 
   <section id="pricing" style="padding: 72px 0;">
     <div class="container">
-      <h2 class="section-title">One-time pricing. No subscription.</h2>
+      <h2 class="section-title">Simple pricing. Your list never leaves your laptop.</h2>
       <p class="section-sub">
-        “Buy it once. No monthly fee, and your client list never leaves your
-        laptop.”
+        “Free at a gentle pace. Paid when you need the volume — cancel any
+        time and drop back to Free.”
       </p>
       <div class="pricing-grid">
         {pricing.map((tier) => (
@@ -62,15 +63,30 @@ import { site, pricing } from '../site';
             <h3>{tier.name}</h3>
             <p class="price">{tier.price}</p>
             <p class="period">{tier.period} · {tier.devices}</p>
+            {tier.yearly && (
+              <p class="yearly">{tier.yearly.price} billed yearly — {tier.yearly.note}</p>
+            )}
             <p class="blurb">{tier.blurb}</p>
             <ul>
               {tier.features.map((f) => <li>{f}</li>)}
             </ul>
             <a
               class:list={['btn', 'btn-block', tier.featured ? 'btn-primary' : 'btn-secondary']}
-              href={site.purchaseUrl || '#pricing'}
-              aria-disabled={site.purchaseUrl ? undefined : 'true'}
-              title={site.purchaseUrl ? undefined : 'Checkout opens at launch'}
+              href={
+                tier.id === 'free'
+                  ? '#download'
+                  : (tier.checkoutMonthly || site.purchaseUrl || '#pricing')
+              }
+              aria-disabled={
+                tier.id !== 'free' && !(tier.checkoutMonthly || site.purchaseUrl)
+                  ? 'true'
+                  : undefined
+              }
+              title={
+                tier.id !== 'free' && !(tier.checkoutMonthly || site.purchaseUrl)
+                  ? 'Checkout opens at launch'
+                  : undefined
+              }
             >
               {tier.cta}
             </a>
@@ -78,7 +94,7 @@ import { site, pricing } from '../site';
         ))}
       </div>
       {!site.purchaseUrl && (
-        <p class="store-note">Checkout opens at launch — until then, start the free trial.</p>
+        <p class="store-note">Paid checkout opens at launch — the Free plan works today, and the paid buttons unlock with the store.</p>
       )}
     </div>
   </section>
@@ -104,6 +120,23 @@ import { site, pricing } from '../site';
           <p>The installer isn’t code-signed yet, so the warning is expected. <a
             href="/install">This page</a> shows the exact two clicks to
             proceed safely.</p>
+        </details>
+        <details>
+          <summary>Is there really a free plan?</summary>
+          <p>Yes — the full app, forever, at 25 emails a day. No credit card
+            and no time limit. It exists so you can feel the workflow before
+            paying anything.</p>
+        </details>
+        <details>
+          <summary>What happens when I cancel a paid plan?</summary>
+          <p>Nothing breaks. At the end of the billing period the app drops to
+            the Free plan (25 emails/day). Your data never leaves your laptop,
+            so there is nothing to export or delete on our side.</p>
+        </details>
+        <details>
+          <summary>How does yearly billing work?</summary>
+          <p>Pay once a year for a discount versus monthly — Personal $39/year
+            and Agency $99/year. Same features, same cancel-anytime terms.</p>
         </details>
       </div>
     </div>
@@ -158,7 +191,8 @@ import { site, pricing } from '../site';
     }
     .price-card h3 { margin: 4px 0 2px; font-size: 17px; }
     .price { font-size: 38px; font-weight: 800; margin: 6px 0 0; }
-    .period { color: var(--text-dim); font-size: 13px; margin: 2px 0 12px; }
+    .period { color: var(--text-dim); font-size: 13px; margin: 2px 0; }
+    .yearly { color: var(--accent); font-size: 13px; font-weight: 600; margin: 2px 0 12px; }
     .blurb { color: var(--text-muted); font-size: 14px; margin: 0 0 14px; }
     .price-card ul { margin: 0 0 20px; padding-left: 18px; color: var(--text-muted); font-size: 14px; }
     .price-card li { margin-bottom: 5px; }
