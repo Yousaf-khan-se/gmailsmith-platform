@@ -12,10 +12,10 @@ import { site, pricing } from '../site';
       <p class="eyebrow">Desktop app for Windows</p>
       <h1>Mail merge for Gmail that <em>never uploads your list</em></h1>
       <p class="lede">
-        GmailSmith sends personalised campaigns straight from your own Gmail
-        account. Recipient data and message content stay on your laptop —
-        there is no cloud database and no middleman. Send free — upgrade only
-        when you need the volume.
+        GmailSmith sends personalised campaigns through your own Gmail
+        account. Your recipient list and campaign history stay on your laptop.
+        When you send, Google Gmail delivers each message you chose to send.
+        Account sign-in is handled by Google Firebase Authentication.
       </p>
       <div id="download" class="download-row">
         <a id="downloadBtn" class="btn btn-primary btn-lg" href="#">Download for Windows</a>
@@ -32,9 +32,9 @@ import { site, pricing } from '../site';
     <div class="container feature-grid">
       <div>
         <h3>Your data stays put</h3>
-        <p>CSVs, contacts and message content live in your app data folder.
-          Only the emails you send leave your machine — through your own
-          Gmail, with Google’s deliverability.</p>
+        <p>CSVs, contacts and campaign history live in your app data folder.
+          When you send, the selected recipient and message go to Google Gmail
+          for delivery. GmailSmith does not upload your full recipient list.</p>
       </div>
       <div>
         <h3>Two ways to connect</h3>
@@ -49,12 +49,29 @@ import { site, pricing } from '../site';
     </div>
   </section>
 
+  <section class="google-data">
+    <div class="container">
+      <h2 class="section-title">What Google access does GmailSmith use?</h2>
+      <p>
+        Google Account identity information is used to sign you in. GmailSmith
+        requests the Gmail <code>gmail.send</code> permission when you
+        connect Gmail, so it can send messages you prepare. It cannot read
+        your inbox, drafts, or contacts. The use of information received from
+        Google Workspace scopes adheres to the
+        <a href="https://developers.google.com/terms/api-services-user-data-policy"
+           target="_blank" rel="noreferrer">Google API Services User Data Policy</a>,
+        including its Limited Use requirements. See the
+        <a href="/privacy">Privacy Policy</a> for details.
+      </p>
+    </div>
+  </section>
+
   <section id="pricing" style="padding: 72px 0;">
     <div class="container">
-      <h2 class="section-title">Simple pricing. Your list never leaves your laptop.</h2>
+      <h2 class="section-title">Simple pricing. Your list stays on your laptop.</h2>
       <p class="section-sub">
-        “Free at a gentle pace. Paid when you need the volume — cancel any
-        time and drop back to Free.”
+        Use the full app on the Free plan. Paid tiers and prices shown here are
+        planned; checkout is not available yet.
       </p>
       <div class="pricing-grid">
         {pricing.map((tier) => (
@@ -104,10 +121,13 @@ import { site, pricing } from '../site';
       <h2 class="section-title">Questions, answered</h2>
       <div class="faq">
         <details>
-          <summary>Does my recipient data ever reach your servers?</summary>
-          <p>No. There are no GmailSmith servers holding your lists — the app
-            runs entirely on your computer. Only your account identity (email,
-            version) is used for sign-in, updates and support.</p>
+          <summary>Does my recipient data go to GmailSmith?</summary>
+          <p>Your campaign lists and history stay on your computer. The app
+            sends each message through Google Gmail to the recipient you chose.
+            Google Firebase Authentication processes your account email and
+            display name for sign-in. We do not upload your campaign list to
+            GmailSmith or use it for analytics. See the
+            <a href="/privacy">Privacy Policy</a>.</p>
         </details>
         <details>
           <summary>Do I need to configure anything?</summary>
@@ -128,15 +148,10 @@ import { site, pricing } from '../site';
             paying anything.</p>
         </details>
         <details>
-          <summary>What happens when I cancel a paid plan?</summary>
-          <p>Nothing breaks. At the end of the billing period the app drops to
-            the Free plan (25 emails/day). Your data never leaves your laptop,
-            so there is nothing to export or delete on our side.</p>
-        </details>
-        <details>
-          <summary>How does yearly billing work?</summary>
-          <p>Pay once a year for a discount versus monthly — Personal $39/year
-            and Agency $99/year. Same features, same cancel-anytime terms.</p>
+          <summary>Can I buy a paid plan today?</summary>
+          <p>Not yet. Paid checkout is not available; the Free plan works today.
+            We will show the final paid plan, billing and cancellation details
+            before checkout opens.</p>
         </details>
       </div>
     </div>
@@ -168,6 +183,14 @@ import { site, pricing } from '../site';
     }
     .feature-grid h3 { margin: 0 0 8px; font-size: 17px; }
     .feature-grid p { margin: 0; color: var(--text-muted); font-size: 14.5px; }
+    .google-data {
+      background: var(--surface2); border-block: 1px solid var(--border);
+      padding: 48px 24px;
+    }
+    .google-data p {
+      color: var(--text-muted); font-size: 15px; line-height: 1.7;
+      max-width: 800px; margin: 18px auto 0; text-align: center;
+    }
     .section-title { text-align: center; font-size: clamp(24px, 3.4vw, 34px); margin: 0 0 8px; }
     .section-sub {
       text-align: center; color: var(--text-muted); max-width: 560px;

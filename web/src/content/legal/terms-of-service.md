@@ -1,121 +1,123 @@
 # GmailSmith — Terms of Service
 
-**Last updated: 2026**
+**Last updated: October 16, 2026**
 
-These terms govern your purchase and use of GmailSmith ("the Software").
-By installing or using it you agree to them. If you do not agree, do not use
-the Software.
+GmailSmith is developed and operated by an individual developer based in
+Lahore, Punjab, Pakistan. These Terms govern your use of the GmailSmith
+desktop application and website. By installing or using the Software, you
+agree to these Terms. If you do not agree, do not use it.
 
-## 1. What you are buying
+## 1. Licence
 
-A licence to use the Software, not the Software itself. The end user licence
-agreement shipped with the installer (`LICENSE`) governs the licence grant,
-restrictions and warranty position; these terms cover the commercial
-relationship.
+You receive a licence to use the Software, not ownership of the Software. The
+end user licence agreement shipped with the installer (LICENSE) also governs
+the licence grant and restrictions. These Terms describe the service and
+commercial relationship.
 
 ## 2. Free plan
 
-The Software includes a permanent Free plan with a modest daily sending limit.
-It is provided so you can confirm the Software works for your use case for as
-long as you like. No payment details are required to use it.
+GmailSmith currently offers a Free plan with a daily sending limit shown in
+the app and on the website. No payment details are required to use the Free
+plan. Features and limits may change in future releases, subject to applicable
+law.
 
-## 3. Pricing and payment
+## 3. Paid plans and payment
 
-Prices are shown at https://gmailsmith.app before purchase, in US dollars, as
-monthly or yearly subscriptions (yearly is billed once per year at a discount
-against the monthly price). Payment is processed by our merchant of record
-(Lemon Squeezy or Paddle), who is the seller of record for the transaction and
-handles applicable sales tax, VAT and GST.
+Paid checkout is not currently available. The paid plan prices and features
+shown on the website are informational and cannot currently be purchased.
+When paid checkout becomes available, the checkout page will show the plan,
+price, billing interval, applicable taxes, renewal and cancellation terms, the
+payment provider, and refund terms before you place an order. No paid
+subscription or renewal can be started through the website at this time.
 
-Paid plans renew automatically at the end of each billing period until
-cancelled. Cancelling stops the next renewal — you keep the paid features until
-the period ends, after which the Software continues on the Free plan. We will
-notify existing subscribers at least 30 days before a price change takes effect.
+## 4. Licence keys
 
-## 4. Licence keys and activation
+If you have a licence key:
 
-- A licence key permits use on the number of devices stated at purchase.
-- Activation binds the key to a device using a randomly generated identifier,
-  not hardware serial numbers or personal data.
-- You can release a device from the licence to move it to new hardware.
-- Keep your key confidential. Keys shared publicly may be deactivated.
+- The key permits use on the number of devices stated with that key.
+- Activation may bind the key to a device using a randomly generated
+  installation identifier.
+- You may release a device from the licence where the Software supports it.
+- Keep the key confidential. Keys shared publicly or used in violation of
+  these Terms may be deactivated.
 
 ## 5. Refunds
 
-Because the Software can be evaluated free of charge before purchase, and
-because it is delivered digitally and cannot be returned, purchases are final.
-
-Subscription refunds are handled by the merchant of record under its own
-subscription refund policy. If a store-level refund was refused and the Software
-did not work as described, contact support within 30 days and we will attempt to
-resolve the problem in good faith, or refund the subscription if we cannot.
-
-This does not affect any statutory rights you may have.
+No paid checkout is currently available. If paid plans are offered later, the
+refund and cancellation terms will be displayed before purchase. Nothing in
+these Terms excludes consumer rights that cannot legally be excluded.
 
 ## 6. Your responsibilities
 
-You are responsible for how you use the Software. In particular you must not:
+You are responsible for how you use the Software. In particular, you must not:
 
 - send unsolicited bulk email or spam;
-- email people who have not consented where consent is required;
-- use the Software to harass, deceive or defraud anyone;
-- violate the terms of your Google account;
-- use the Software to break any law that applies to you.
+- email people without a lawful basis or consent where required;
+- use the Software to harass, deceive, or defraud anyone;
+- violate the terms of your Google Account; or
+- use the Software to break a law that applies to you.
 
-You are the data controller for the recipient data you process with the
-Software. We never handle it (see the Privacy Policy).
+You choose the recipients and content of messages. Campaign data is stored
+locally, but when you send a message its recipient and content are transmitted
+to Google through Gmail for delivery. GmailSmith account information is
+processed by Google Firebase Authentication. See the Privacy Policy for
+details.
 
 ## 7. Deliverability
 
-We do not guarantee that any email will be delivered, that it will reach an
-inbox rather than a spam folder, or that your Google account will not be rate
-limited. Email deliverability depends on your sending practices, your domain
-reputation, and decisions made by Google and by recipients that are outside our
-control.
+We do not guarantee that an email will be delivered, reach an inbox rather
+than a spam folder, or that Google will not rate-limit your account.
+Deliverability depends on your sending practices, account and domain
+reputation, and decisions by Google and recipients outside our control.
 
-The Software's pacing and daily limits exist to reduce risk to your account.
-Disabling or circumventing them is at your own risk.
+The Software's pacing and daily limits are designed to reduce risk to your
+account. Disabling or circumventing them is at your own risk.
 
 ## 8. Updates and support
 
-- Updates and support are provided while your subscription is active.
-- Support is provided by email at the address below. Response times are
-  best-effort, not guaranteed.
-- We may change or discontinue features in future versions. We will not remove
-  features from a version you have already installed and paid for.
+Support is available by email at the address below. Response times are
+best-effort and are not guaranteed. We may change or discontinue features in
+future versions, subject to applicable law. Any update entitlements or paid
+support terms will be shown with the relevant plan before purchase.
 
-## 9. Availability of third-party services
+## 9. Third-party services
 
-The Software depends on Google's Gmail API and, for licence checks, on our
-merchant of record. If those services change their terms or are unavailable, the
-Software may stop working in whole or in part. We are not liable for that,
-though we will make reasonable efforts to adapt.
+The Software relies on Google services for account authentication and email
+delivery. The app may also contact the GmailSmith website for release checks
+and a licence provider when you activate a licence key. Those services are
+subject to their own terms and availability. If they change or become
+unavailable, some Software features may stop working.
 
 ## 10. Limitation of liability
 
 To the maximum extent permitted by law, we are not liable for indirect,
-incidental, special, consequential or punitive damages, or for lost profits,
+incidental, special, consequential, or punitive damages, or for lost profits,
 lost data, lost goodwill, or damage to your email reputation.
 
-Our total aggregate liability is limited to the amount you actually paid for the
-Software in the twelve months before the claim.
-
-Nothing in these terms limits liability that cannot lawfully be limited.
+Our total aggregate liability is limited to the amount you actually paid for
+the Software in the twelve months before the claim. Nothing in these Terms
+limits liability that cannot lawfully be limited.
 
 ## 11. Termination
 
-These terms terminate if you materially breach them. On termination you must
-stop using the Software and remove it from your devices. Sections 6, 10 and 12
-survive termination.
+We may suspend or terminate access if you materially breach these Terms or
+misuse the Software. If your access ends, stop using the Software and remove
+it from your devices. This does not automatically delete local campaign files
+from your computer. The Privacy Policy explains how to delete local data and
+request deletion of your GmailSmith account.
 
-Your local data remains yours and is unaffected by termination.
+## 12. Governing law and disputes
 
-## 12. Governing law
-
-These terms are governed by the laws of **[jurisdiction to be completed]**, and
-the courts of that jurisdiction have exclusive jurisdiction over any dispute.
+These Terms are governed by the laws of Pakistan. Courts located in Lahore,
+Punjab, Pakistan, will have jurisdiction over disputes, subject to any
+mandatory consumer protections or other rights that apply to you and cannot be
+waived.
 
 ## 13. Contact
 
+GmailSmith is operated by an individual developer based in Lahore, Punjab,
+Pakistan; it is not a registered company.
+
 **Email:** support@gmailsmith.app
+
 **Website:** https://gmailsmith.app
