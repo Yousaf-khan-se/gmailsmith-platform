@@ -1,18 +1,24 @@
 // Single source of truth for the site's copy and links.
 // Per-tier checkoutMonthly / checkoutYearly URLs (plus the site-wide
 // purchaseUrl fallback) flip from '' to the Lemon Squeezy variant checkout
-// links when the store exists (docs/08 §8.3, P5 checklist) — until then the
-// paid pricing buttons render a disabled state instead of pointing buyers
-// nowhere. The Free tier always links straight to the download.
+// links when the store exists (docs/08 §8.3, P5 checklist). While public
+// availability is paused, every acquisition CTA points to the waitlist.
 export const site = {
   name: 'GmailSmith',
   url: 'https://gmailsmith.app',
   tagline: 'Desktop mail merge for Gmail',
-  description:
-    'Send personalised email campaigns from your own Gmail. Your recipient ' +
-    'lists never leave your laptop — no cloud, no middleman, send-only access.',
+  get description() {
+    const product =
+      'GmailSmith is a Windows mail merge app for Gmail. Personalize messages ' +
+      'from CSV rows while keeping your recipient list on your computer.';
+    return this.availability === 'waitlist'
+      ? `${product} Join the waitlist for one availability email.`
+      : `${product} Download GmailSmith for Windows.`;
+  },
   supportEmail: 'support@gmailsmith.app',
   purchaseUrl: '',
+  availability: 'waitlist' as 'waitlist' | 'download',
+  waitlistConsentVersion: 'v1',
   version: '1.0.0',
   releases: {
     manifest: '/releases/latest.json',

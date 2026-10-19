@@ -1,30 +1,88 @@
 ---
-// Landing + download + pricing. The download button is driven by
-// /releases/latest.json exactly as docs/08 §8.1 prescribes — a page that
-// advertises a build which does not exist is worse than no page at all.
+// Public landing page and pricing. While Gmail scope verification is pending,
+// the primary path is a one-time availability waitlist; the release-manifest
+// download path remains available behind site.availability for launch.
 import Base from '../layouts/Base.astro';
 import { site, pricing } from '../site';
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 ---
 
 <Base title={site.name} path="/">
   <section style="padding: 88px 0 64px;">
     <div class="container hero">
-      <p class="eyebrow">Desktop app for Windows</p>
+      <p class="eyebrow">
+        Desktop app for Windows{site.availability === 'waitlist' ? ' · Public release pending' : ''}
+      </p>
       <h1>Mail merge for Gmail that <em>never uploads your list</em></h1>
       <p class="lede">
-        GmailSmith sends personalised campaigns through your own Gmail
-        account. Your recipient list and campaign history stay on your laptop —
-        there is no GmailSmith server holding them. Sign in with Google, and
-        Gmail delivers every message you send.
+        GmailSmith helps you personalize Gmail messages from CSV rows. Your
+        recipient list and campaign history stay on your computer; the app
+        sends each message through the Gmail account you connect.
       </p>
-      <div id="download" class="download-row">
-        <a id="downloadBtn" class="btn btn-primary btn-lg" href="#">Download for Windows</a>
-        <p id="downloadMeta" class="download-meta">Fetching the latest release…</p>
-      </div>
-      <p class="smarthint">
-        Windows will show <strong>“Windows protected your PC”</strong> on first
-        run — it’s expected for a new, unsigned installer. <a href="/install">Show me the two-click fix →</a>
-      </p>
+      {site.availability === 'waitlist' ? (
+        <div id="waitlist" class="waitlist-card">
+          <h2>Get one email when GmailSmith is available</h2>
+          <p class="waitlist-intro">
+            Public downloads are paused while Google reviews Gmail sending access.
+            We don’t have a release date yet. Join the list for one availability
+            email — no newsletter or recurring marketing.
+          </p>
+          {turnstileSiteKey ? (
+            <form id="waitlistForm" class="waitlist-form">
+              <div class="field">
+                <label for="waitlistEmail">Email address</label>
+                <input id="waitlistEmail" name="email" type="email" autocomplete="email"
+                       maxlength="254" required placeholder="you@example.com"
+                       aria-describedby="waitlistConsent waitlistStatus" />
+              </div>
+              <label class="consent-row" for="waitlistConsent">
+                <input id="waitlistConsent" name="consent" type="checkbox" required />
+                <span>Email me once when GmailSmith is available. I understand this
+                  is a one-time availability notice, not a recurring mailing list.</span>
+              </label>
+              <div class="honeypot" aria-hidden="true">
+                <label for="waitlistCompany">Company</label>
+                <input id="waitlistCompany" name="company" type="text" tabindex="-1"
+                       autocomplete="off" />
+              </div>
+              <div class="turnstile-wrap">
+                <div class="cf-turnstile" data-sitekey={turnstileSiteKey}
+                     data-action="waitlist" data-size="flexible" data-theme="dark"></div>
+              </div>
+              <button id="waitlistSubmit" class="btn btn-primary btn-lg" type="submit">
+                Notify me once
+              </button>
+              <p id="waitlistStatus" class="waitlist-status" role="status"
+                 aria-live="polite" aria-atomic="true"></p>
+              <p class="privacy-note">
+                We store your email with Cloudflare to send this notice. You can
+                ask us to remove it at any time. See our <a href="/privacy">Privacy Policy</a>.
+              </p>
+              <noscript>
+                <p class="waitlist-unavailable">This form needs JavaScript. You can
+                  <a href={`mailto:${site.supportEmail}?subject=GmailSmith%20availability%20notice`}>email us</a>
+                  to request the one-time availability notice instead.</p>
+              </noscript>
+            </form>
+          ) : (
+            <p class="waitlist-unavailable" role="status">
+              Waitlist signup is being set up. Please check back soon or
+              <a href={`mailto:${site.supportEmail}`}>contact support</a>.
+            </p>
+          )}
+        </div>
+      ) : (
+        <>
+          <div id="download" class="download-row">
+            <a id="downloadBtn" class="btn btn-primary btn-lg" href="#">Download for Windows</a>
+            <p id="downloadMeta" class="download-meta">Fetching the latest release…</p>
+          </div>
+          <p class="smarthint">
+            Windows will show <strong>“Windows protected your PC”</strong> on first
+            run — it’s expected for a new, unsigned installer. <a href="/install">Show me the two-click fix →</a>
+          </p>
+        </>
+      )}
     </div>
   </section>
 
@@ -32,14 +90,20 @@ import { site, pricing } from '../site';
     <div class="container feature-grid">
       <div>
         <h3>Your data stays put</h3>
-        <p>CSVs, contacts and campaign history live in your app data folder.
-          When you send, only the chosen message travels — through your own
-          Gmail to that recipient. Your full list never leaves your laptop.</p>
+        <p>CSVs, contacts and campaign history in the desktop app live on your
+          computer. When you send, only the chosen message travels through Gmail
+          to its recipient. Waitlist emails are stored separately by Cloudflare
+          only for the one availability notice.</p>
       </div>
       <div>
         <h3>Two ways to connect</h3>
         <p>One-click Google sign-in or a Gmail App Password — connect your
           existing Gmail and start sending. Nothing else to set up.</p>
+      </div>
+      <div>
+        <h3>Personalize each row</h3>
+        <p>Each CSV recipient row needs an email address. Other column headers
+          become merge fields you can place in your subject and message body.</p>
       </div>
       <div>
         <h3>Live campaign tracking</h3>
@@ -70,13 +134,16 @@ import { site, pricing } from '../site';
     <div class="container">
       <h2 class="section-title">Simple pricing. Your list stays on your laptop.</h2>
       <p class="section-sub">
-        Use the full app on the Free plan. Paid tiers and prices shown here are
-        planned; checkout is not available yet.
+        These plans and prices are planned and cannot be purchased while public
+        availability is pending. Join the waitlist to receive one email when
+        downloads open.
       </p>
       <div class="pricing-grid">
         {pricing.map((tier) => (
           <div class:list={['price-card', { featured: tier.featured }]}>
-            {tier.featured && <span class="badge">Most popular</span>}
+            {tier.featured && (
+              <span class="badge">{site.availability === 'waitlist' ? 'Recommended' : 'Most popular'}</span>
+            )}
             <h3>{tier.name}</h3>
             <p class="price">{tier.price}</p>
             <p class="period">{tier.period} · {tier.devices}</p>
@@ -87,31 +154,28 @@ import { site, pricing } from '../site';
             <ul>
               {tier.features.map((f) => <li>{f}</li>)}
             </ul>
-            <a
-              class:list={['btn', 'btn-block', tier.featured ? 'btn-primary' : 'btn-secondary']}
-              href={
-                tier.id === 'free'
-                  ? '#download'
-                  : (tier.checkoutMonthly || site.purchaseUrl || '#pricing')
-              }
-              aria-disabled={
-                tier.id !== 'free' && !(tier.checkoutMonthly || site.purchaseUrl)
-                  ? 'true'
-                  : undefined
-              }
-              title={
-                tier.id !== 'free' && !(tier.checkoutMonthly || site.purchaseUrl)
-                  ? 'Checkout opens at launch'
-                  : undefined
-              }
-            >
-              {tier.cta}
-            </a>
+            {site.availability === 'waitlist' ? (
+              <a class:list={['btn', 'btn-block', tier.featured ? 'btn-primary' : 'btn-secondary']}
+                 href="#waitlist">Get availability email</a>
+            ) : (
+              <a
+                class:list={['btn', 'btn-block', tier.featured ? 'btn-primary' : 'btn-secondary']}
+                href={tier.id === 'free' ? '#download' : (tier.checkoutMonthly || site.purchaseUrl || '#pricing')}
+                aria-disabled={tier.id !== 'free' && !(tier.checkoutMonthly || site.purchaseUrl) ? 'true' : undefined}
+                title={tier.id !== 'free' && !(tier.checkoutMonthly || site.purchaseUrl) ? 'Checkout opens at launch' : undefined}
+              >
+                {tier.cta}
+              </a>
+            )}
           </div>
         ))}
       </div>
       {!site.purchaseUrl && (
-        <p class="store-note">Paid checkout opens at launch — the Free plan works today, and the paid buttons unlock with the store.</p>
+        <p class="store-note">
+          {site.availability === 'waitlist'
+            ? 'The app and checkout are not currently available. Plan details may change before launch.'
+            : 'Paid checkout opens at launch; the Free plan is available now.'}
+        </p>
       )}
     </div>
   </section>
@@ -143,16 +207,24 @@ import { site, pricing } from '../site';
         </details>
         <details>
           <summary>Is there really a free plan?</summary>
-          <p>Yes — the full app, forever, at 25 emails a day. No credit card
-            and no time limit. It exists so you can feel the workflow before
-            paying anything.</p>
+          <p>{site.availability === 'waitlist'
+            ? 'The planned Free tier is $0 with a 25-email daily limit. Downloads are not available yet, and plan details may change before launch. Join the waitlist for one availability email.'
+            : 'Yes — the full app, forever, at 25 emails a day. No credit card and no time limit.'}</p>
         </details>
         <details>
           <summary>Can I buy a paid plan today?</summary>
-          <p>Not yet. Paid checkout is not available; the Free plan works today.
-            We will show the final paid plan, billing and cancellation details
-            before checkout opens.</p>
+          <p>{site.availability === 'waitlist'
+            ? 'No. Public downloads and paid checkout are not open while Google reviews Gmail sending access. We do not have a release date yet.'
+            : 'Paid checkout is not available yet. We will show the final plan, billing and cancellation details before checkout opens.'}</p>
         </details>
+        {site.availability === 'waitlist' && (
+          <details>
+            <summary>What happens after I join?</summary>
+            <p>We store your email for one availability notice. We will not send
+              a newsletter or ongoing product marketing. You can request removal
+              using the support email in the footer.</p>
+          </details>
+        )}
       </div>
     </div>
   </section>
@@ -172,6 +244,37 @@ import { site, pricing } from '../site';
     .download-row { display: flex; flex-direction: column; align-items: center; gap: 10px; }
     .btn-lg { padding: 15px 34px; font-size: 16.5px; }
     .download-meta { color: var(--text-dim); font-size: 13.5px; margin: 0; min-height: 20px; }
+    .waitlist-card {
+      max-width: 600px; margin: 0 auto; padding: 28px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); text-align: left;
+    }
+    .waitlist-card h2 { margin: 0 0 8px; font-size: 21px; text-align: center; }
+    .waitlist-intro { color: var(--text-muted); font-size: 14.5px; text-align: center; margin: 0 0 20px; }
+    .waitlist-form { display: grid; gap: 14px; }
+    .field { display: grid; gap: 6px; }
+    .field label { font-size: 14px; font-weight: 600; }
+    .field input[type='email'] {
+      width: 100%; border: 1px solid var(--border); border-radius: 9px;
+      background: var(--bg); color: var(--text); font: inherit; padding: 12px 14px;
+    }
+    .field input:focus-visible, .consent-row input:focus-visible, .waitlist-form button:focus-visible {
+      outline: 3px solid var(--accent); outline-offset: 3px;
+    }
+    .consent-row { display: flex; gap: 10px; align-items: flex-start; color: var(--text-muted); font-size: 13.5px; }
+    .consent-row input { margin-top: 4px; width: 17px; height: 17px; flex: 0 0 auto; accent-color: var(--accent); }
+    .turnstile-wrap { min-height: 65px; display: flex; justify-content: center; }
+    .waitlist-form button { justify-self: center; }
+    .waitlist-status { min-height: 22px; margin: 0; text-align: center; color: var(--text-muted); font-size: 14px; }
+    .waitlist-status[data-state='error'] { color: #ff9b91; }
+    .waitlist-status[data-state='success'] { color: var(--green); }
+    .privacy-note, .waitlist-unavailable { margin: 0; color: var(--text-dim); font-size: 12.5px; text-align: center; }
+    .honeypot { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    @media (max-width: 560px) {
+      .waitlist-card { padding: 20px 16px; }
+      .waitlist-card h2 { font-size: 19px; }
+      .waitlist-form .btn-lg { width: 100%; }
+    }
     .smarthint {
       margin-top: 26px; font-size: 13.5px; color: var(--text-dim);
       max-width: 560px; margin-inline: auto;
@@ -234,29 +337,86 @@ import { site, pricing } from '../site';
     .faq p { color: var(--text-muted); font-size: 14.5px; margin: 10px 0 0; }
   </style>
 
-  <script>
-    // docs/08 §8.1: the manifest drives the button; never hard-code a build.
-    fetch('/releases/latest.json')
-      .then((r) => (r.ok ? r.json() : null))
-      .then((release) => {
-        const file = release && release.installer;
-        if (!file) throw new Error('no installer in manifest');
-        const btn = document.getElementById('downloadBtn');
-        const meta = document.getElementById('downloadMeta');
-        if (!btn || !meta) return;
-        btn.href = '/releases/' + file.filename;
-        btn.textContent = 'Download GmailSmith ' + release.version;
-        meta.textContent =
-          (file.bytes / 1048576).toFixed(1) +
-          ' MB · SHA-256 ' + file.sha256.slice(0, 16) + '…';
-      })
-      .catch(() => {
-        const meta = document.getElementById('downloadMeta');
-        if (meta) {
-          meta.textContent =
-            'Release manifest unavailable — try again in a moment.';
+  {site.availability === 'waitlist' ? (
+    <>
+      {turnstileSiteKey && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+      <script define:vars={{ consentVersion: site.waitlistConsentVersion }}>
+        const form = document.getElementById('waitlistForm');
+        const status = document.getElementById('waitlistStatus');
+        const submit = document.getElementById('waitlistSubmit');
+        if (form && status && submit) {
+          form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            if (!form.reportValidity()) return;
+            const data = new FormData(form);
+            const token = String(data.get('cf-turnstile-response') || '');
+            if (!token) {
+              status.textContent = 'Complete the security check, then try again.';
+              status.dataset.state = 'error';
+              return;
+            }
+            status.textContent = 'Saving your request…';
+            status.dataset.state = '';
+            submit.disabled = true;
+            try {
+              const response = await fetch('/api/waitlist', {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify({
+                  email: data.get('email'),
+                  consent: data.get('consent') === 'on',
+                  consentVersion,
+                  turnstileToken: token,
+                  company: data.get('company'),
+                  source: new URLSearchParams(window.location.search).get('utm_source') || '',
+                }),
+              });
+              const result = await response.json().catch(() => ({}));
+              if (!response.ok || !result.ok) {
+                throw new Error(result.message || 'We could not save your request. Please try again.');
+              }
+              status.textContent = result.message;
+              status.dataset.state = 'success';
+              form.reset();
+              window.turnstile?.reset();
+            } catch (error) {
+              status.textContent = error instanceof Error
+                ? error.message
+                : 'We could not save your request. Please try again.';
+              status.dataset.state = 'error';
+              window.turnstile?.reset();
+            } finally {
+              submit.disabled = false;
+            }
+          });
         }
-      });
-  </script>
+      </script>
+    </>
+  ) : (
+    <script>
+      // docs/08 §8.1: the manifest drives the button; never hard-code a build.
+      fetch('/releases/latest.json')
+        .then((r) => (r.ok ? r.json() : null))
+        .then((release) => {
+          const file = release && release.installer;
+          if (!file) throw new Error('no installer in manifest');
+          const btn = document.getElementById('downloadBtn');
+          const meta = document.getElementById('downloadMeta');
+          if (!btn || !meta) return;
+          btn.href = '/releases/' + file.filename;
+          btn.textContent = 'Download GmailSmith ' + release.version;
+          meta.textContent =
+            (file.bytes / 1048576).toFixed(1) +
+            ' MB · SHA-256 ' + file.sha256.slice(0, 16) + '…';
+        })
+        .catch(() => {
+          const meta = document.getElementById('downloadMeta');
+          if (meta) {
+            meta.textContent =
+              'Release manifest unavailable — try again in a moment.';
+          }
+        });
+    </script>
+  )}
 </Base>
 

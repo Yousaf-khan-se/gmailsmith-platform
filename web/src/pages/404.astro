@@ -8,8 +8,13 @@ import { site } from '../site';
   <section class="container nf">
     <p class="code">404</p>
     <h1>That page doesn’t exist</h1>
-    <p>The download is on the <a href="/">front page</a>, and install help
-      lives at <a href="/install">/install</a>.</p>
+    {site.availability === 'waitlist' ? (
+      <p>Public downloads are pending. Visit the <a href="/#waitlist">waitlist</a>
+        to get one email when GmailSmith is available.</p>
+    ) : (
+      <p>The download is on the <a href="/">front page</a>, and install help
+        lives at <a href="/install">/install</a>.</p>
+    )}
     <p class="dim">Support: <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a></p>
   </section>
   <style>

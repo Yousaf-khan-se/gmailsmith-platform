@@ -1,6 +1,6 @@
 # GmailSmith — Privacy Policy
 
-**Last updated: October 16, 2026**
+**Last updated: October 18, 2026**
 
 ## The short version
 
@@ -31,6 +31,37 @@ signed in. If you opt in to product-update emails during registration, the app
 stores the consent choice and its timestamp locally. You can ask us to delete
 your Firebase account by emailing support@gmailsmith.app.
 
+### Website availability waitlist
+
+If you submit the waitlist form at gmailsmith.app, we collect the email address
+you provide, the time you asked to be notified, the consent-text version, and
+an optional campaign source label from the link you used. The form requires you
+to confirm: “Email me once when GmailSmith is available.” This is a request for
+one availability email only. It does not subscribe you to a newsletter or
+ongoing product marketing. We do not send a confirmation or other email when
+you join.
+
+The waitlist Worker stores this information in a Cloudflare D1 database. The
+Worker does not store your IP address. Cloudflare may process ordinary network
+information while providing website hosting, Turnstile bot protection, and
+security. To rate-limit signups, the Worker also derives a SHA-256 digest from
+the normalized email address; it does not save that digest in D1 or log it.
+The form's Turnstile token is checked by Cloudflare before the address is
+saved. If you ask us to remove your address before launch, email
+support@gmailsmith.app; we will remove it from the waitlist database, any
+email-delivery provider in use, and any temporary export still in our control.
+
+If GmailSmith has not become publicly available, our daily cleanup is scheduled
+to delete waitlist entries by the 12-month retention limit. When downloads
+open, we may transfer the addresses
+of people who asked for the notice to Resend (or another email-delivery
+provider) to send that one availability email. We temporarily create a CSV
+export for that transfer and delete it after the provider import is verified.
+We delete the provider list and waitlist database entries within 30 days after
+sending. We do not use this waitlist consent for newsletters, unrelated
+promotions, or recurring marketing. A separate opt-in would be needed for those
+messages.
+
 ### Gmail connection and Google user data
 
 GmailSmith uses Google OAuth to connect the Gmail account you choose. It asks
@@ -59,7 +90,7 @@ These items are stored locally on your computer:
 
 | Location | Contents |
 | :--- | :--- |
-| %LOCALAPPDATA%\GmailSmith\campaigns.db | Connected account details and tokens, campaign history, per-recipient delivery results, opt-out list, settings, and local sign-in session |
+| %LOCALAPPDATA%\GmailSmith\campaigns.db | Connected sender account details and tokens, campaign history and row-level results, CSV email-column mappings, opt-out list, settings, and local sign-in session |
 | %LOCALAPPDATA%\GmailSmith\uploads\ | CSV files you import and attachments you upload |
 | %LOCALAPPDATA%\GmailSmith\credentials\ | Your own Google Cloud OAuth client file, if you use the OAuth connection method |
 | %LOCALAPPDATA%\GmailSmith\logs\ | A rotating diagnostic log |
@@ -67,6 +98,12 @@ These items are stored locally on your computer:
 On macOS the app data directory is ~/Library/Application Support/GmailSmith;
 on Linux it is ~/.local/share/gmailsmith. GmailSmith does not receive these
 files. Uninstalling the app does not remove them.
+
+The downloadable backup ZIP includes the SQLite database, uploaded CSVs and
+attachments, and logs. Because the database contains stored Gmail sender
+credentials/tokens and the Firebase sign-in refresh session, the ZIP contains
+sensitive authentication data. Store it securely and do not assume it is
+credential-free.
 
 ## Other network connections
 
@@ -95,7 +132,8 @@ The app does not include advertising, analytics, or crash-reporting services.
 | :--- | :--- |
 | Google Firebase Authentication | GmailSmith account registration and sign-in |
 | Google (OAuth and Gmail API/SMTP) | Identify the selected Google account and deliver the emails you send |
-| Cloudflare, the website host | Serve the public site, release manifest, and downloads |
+| Cloudflare, the website host, Turnstile provider, and D1 provider | Serve the public site, validate waitlist submissions, and store the one-time availability waitlist |
+| Resend, if used for launch notice delivery | Import and deliver the one-time availability email to people who requested it |
 | Licence provider, if you activate a key | Validate the key and its plan status |
 | Public font and script providers | Load interface resources |
 
@@ -107,6 +145,12 @@ policies. GmailSmith does not control their independent processing.
 You choose the recipients and content of each campaign. You are responsible
 for having the right to contact recipients, honoring opt-out requests, and
 following email and privacy laws that apply to you.
+
+GmailSmith does not monitor your Gmail inbox or process replies. If a recipient
+asks to opt out by replying, you must review that message and manually add the
+address to the app's Opt-outs list before sending to that person again. The
+optional footer is a notice only; it does not verify consent or replace your
+legal responsibilities.
 
 - **Local data:** Use the app's Settings option to delete local app data. You
   can export campaign history and opt-outs from the app before deleting them.
@@ -120,6 +164,10 @@ following email and privacy laws that apply to you.
 - **Product updates:** The optional product-update checkbox is off by default.
   Its consent timestamp is stored locally. You may withdraw consent by
   contacting support@gmailsmith.app.
+- **Availability waitlist:** You may ask us to remove your address at any time
+  by emailing support@gmailsmith.app. Waitlist signup authorizes only one email
+  announcing that public downloads are available; it does not authorize ongoing
+  marketing.
 
 We retain local data on your device until you delete it. Google retains
 account and authentication information under its service terms and until the
@@ -129,7 +177,8 @@ Firebase account is deleted, subject to any legal retention requirements.
 
 - Google and Firebase connections use HTTPS.
 - Gmail and GmailSmith account tokens are stored in the app's local data
-  directory on your device. Keep your computer account secure.
+  directory on your device and are included in the downloadable backup. Keep
+  your computer account and any backup archive secure.
 - The local app server binds to 127.0.0.1 and is not reachable from your
   network.
 

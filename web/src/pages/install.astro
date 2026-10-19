@@ -11,6 +11,13 @@ import { site } from '../site';
   path="/install"
 >
   <article class="container doc">
+    {site.availability === 'waitlist' && (
+      <aside class="availability-note">
+        <strong>Public downloads are not open yet.</strong>
+        GmailSmith is completing Google review for Gmail sending access.
+        <a href="/#waitlist">Get one email when downloads are available.</a>
+      </aside>
+    )}
     <h1>Installing GmailSmith on Windows</h1>
     <p class="lede">
       The installer is new and not code-signed yet, so Microsoft SmartScreen
@@ -52,6 +59,12 @@ import { site } from '../site';
 
   <style>
     .doc { max-width: 760px; padding: 56px 24px; }
+    .availability-note {
+      padding: 16px 18px; margin: 0 0 28px; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--surface);
+      color: var(--text-muted); font-size: 14px;
+    }
+    .availability-note strong { color: var(--text); margin-right: 4px; }
     h1 { font-size: clamp(26px, 4vw, 38px); margin: 0 0 12px; }
     .lede { color: var(--text-muted); font-size: 16px; }
     h2 { margin-top: 40px; font-size: 22px; }

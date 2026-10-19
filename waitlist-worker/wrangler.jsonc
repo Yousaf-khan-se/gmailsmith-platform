@@ -1,0 +1,33 @@
+{
+  "name": "gmailsmith-waitlist",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-18",
+  "workers_dev": false,
+  "routes": [
+    { "pattern": "gmailsmith.app/api/waitlist*", "zone_name": "gmailsmith.app" }
+  ],
+  "d1_databases": [
+    {
+      "binding": "WAITLIST_DB",
+      "database_name": "gmailsmith-waitlist",
+      "database_id": "a2fbc522-dc60-4aa7-96df-01f0863af600",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "EMAIL_RATE_LIMITER",
+      "namespace_id": "836147",
+      "simple": { "limit": 5, "period": 60 }
+    }
+  ],
+  "vars": {
+    "ALLOWED_ORIGIN": "https://gmailsmith.app",
+    "CONSENT_VERSION": "v1",
+    "TURNSTILE_EXPECTED_HOSTNAME": "gmailsmith.app",
+    "WAITLIST_OPEN": "true"
+  },
+  "triggers": {
+    "crons": ["17 4 * * *"]
+  }
+}

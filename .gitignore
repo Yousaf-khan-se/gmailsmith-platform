@@ -6,6 +6,7 @@ dist/
 # Secrets — R2 credentials and anything similar never enter Git
 .env
 .env.*
+waitlist-export.csv
 
 # Python
 __pycache__/
