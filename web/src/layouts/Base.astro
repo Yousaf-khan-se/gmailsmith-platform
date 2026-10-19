@@ -8,8 +8,9 @@ interface Props {
   title: string;
   description?: string;
   path?: string;
+  noindex?: boolean;
 }
-const { title, description = site.description, path = '/' } = Astro.props;
+const { title, description = site.description, path = '/', noindex = false } = Astro.props;
 const fullTitle = title === site.name ? `${site.name} — ${site.tagline}` : `${title} · ${site.name}`;
 const canonical = new URL(path, site.url).toString();
 ---
@@ -22,6 +23,7 @@ const canonical = new URL(path, site.url).toString();
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex,follow" />}
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />

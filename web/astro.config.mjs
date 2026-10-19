@@ -9,5 +9,18 @@ export default defineConfig({
   output: 'static',
   site: 'https://gmailsmith.app',
   trailingSlash: 'ignore',
-  integrations: [sitemap()],
+  integrations: [sitemap({
+    filter(page) {
+      const pathname = new URL(page).pathname.replace(/\/+$/, '') || '/';
+      return pathname !== '/verify' && pathname !== '/reset';
+    },
+    serialize(item) {
+      const url = new URL(item.url);
+      if (url.pathname !== '/') {
+        url.pathname = url.pathname.replace(/\/+$/, '');
+        item.url = url.toString();
+      }
+      return item;
+    },
+  })],
 });
