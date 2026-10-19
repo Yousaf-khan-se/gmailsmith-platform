@@ -1,6 +1,6 @@
 # GmailSmith — Privacy Policy
 
-**Last updated: October 18, 2026**
+**Last updated: October 19, 2026**
 
 ## The short version
 
@@ -83,6 +83,34 @@ advertising, or use it to train general-purpose AI or machine-learning models.
 The use of information received from Google Workspace scopes adheres to the
 [Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy),
 including its Limited Use requirements.
+
+#### Who receives Google user data
+
+For the app features you choose to use, GmailSmith shares Google user data only
+with the parties listed here:
+
+| Recipient | Google user data shared and purpose |
+| :--- | :--- |
+| **Google LLC — Google OAuth and Gmail services** | Google OAuth receives the authorization code to exchange it for tokens and receives the refresh token when GmailSmith refreshes access. Google returns the tokens to the app, where they are stored on your computer. GmailSmith uses Google's OpenID Connect user-info service to identify the connected sender address. If you choose Gmail SMTP, Google's SMTP service receives your sender address and Gmail App Password for authentication. When you send a campaign or test message, Gmail API or Gmail SMTP receives the recipient address, subject, message body, and any attachments you selected so Google can deliver that message. |
+| **Google Firebase Authentication** | If you choose Google sign-in for your separate GmailSmith account, the app sends the Google sign-in ID token to Firebase Authentication. Firebase processes the Google account email address and basic identity information to create or sign in to your GmailSmith account and returns the Firebase account identity and session tokens. This account sign-in is separate from connecting a Gmail sender. |
+| **The email recipients you select** | Google delivers the message, including its subject, body, and attachments, to the addresses you chose. Those recipients and their email providers receive and process the message as part of delivery. GmailSmith does not choose recipients for you. |
+
+The GmailSmith desktop app stores the connected sender address and OAuth
+tokens on your computer. It does not upload Gmail mailbox data, sender tokens,
+recipient lists, or message content to the GmailSmith website or to the
+developer. Cloudflare (website hosting and the availability waitlist), Resend
+(if used for the one-time availability notice), licence-validation providers,
+and font or script providers do not receive Google user data from the app.
+These services may receive the separate information described in this policy
+for their own functions. If you choose to send information to support yourself,
+only the information you include in that message is shared with support.
+
+Apart from the feature-specific sharing described above and information you
+choose to send directly to support, GmailSmith does not transfer or disclose
+Google user data to third parties, except when disclosure is required by law
+or necessary to protect security. We do not sell Google user data, use it for
+advertising or analytics, or use it to train generalized AI or machine-learning
+models.
 
 ### Campaign and device data
 
