@@ -1,0 +1,22 @@
+{
+  "name": "gmailsmith-account-security",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-18",
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "gmailsmith.app/api/account/revoke-sessions",
+      "zone_name": "gmailsmith.app"
+    }
+  ],
+  "vars": {
+    "FIREBASE_PROJECT_ID": "gmailsmith-510919"
+  },
+  "ratelimits": [
+    {
+      "name": "REVOCATION_RATE_LIMITER",
+      "namespace_id": "20261024",
+      "simple": { "limit": 3, "period": 60 }
+    }
+  ]
+}
