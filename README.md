@@ -43,4 +43,4 @@ pending (`web/src/site.ts`). Configure the Turnstile site key in the static
 site build environment, create and migrate D1, and deploy the waitlist Worker
 before publishing the form. See `waitlist-worker/README.md` for setup, private
 CSV export, launch-email handling, and retention cleanup. The app repo remains
-the source of truth for the policy mirrored at `/privacy`.
+the source of truth for the legal pages mirrored at `/privacy` and `/terms`.

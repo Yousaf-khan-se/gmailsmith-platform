@@ -127,11 +127,12 @@ On macOS the app data directory is ~/Library/Application Support/GmailSmith;
 on Linux it is ~/.local/share/gmailsmith. GmailSmith does not receive these
 files. Uninstalling the app does not remove them.
 
-The downloadable backup ZIP includes the SQLite database, uploaded CSVs and
-attachments, and logs. Because the database contains stored Gmail sender
-credentials/tokens and the Firebase sign-in refresh session, the ZIP contains
-sensitive authentication data. Store it securely and do not assume it is
-credential-free.
+The downloadable backup ZIP includes campaign history, recipient results,
+opt-out records, uploaded CSVs, attachments, and logs. It excludes connected
+sender accounts, Gmail OAuth tokens, SMTP passwords, Firebase sign-in sessions,
+licence keys, and the Flask session key. After restoring a backup, sign in to
+GmailSmith and reconnect any sender accounts. The archive still contains
+recipient and campaign information, so store it securely and do not share it.
 
 ## Other network connections
 

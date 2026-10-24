@@ -1,6 +1,6 @@
 # GmailSmith — Terms of Service
 
-**Last updated: October 16, 2026**
+**Last updated: October 24, 2026**
 
 GmailSmith is developed and operated by an individual developer based in
 Lahore, Punjab, Pakistan. These Terms govern your use of the GmailSmith
@@ -63,6 +63,11 @@ to Google through Gmail for delivery. GmailSmith account information is
 processed by Google Firebase Authentication. See the Privacy Policy for
 details.
 
+GmailSmith does not monitor your inbox or process opt-out replies. You must
+review replies and manually add opt-out requests to the app's Opt-outs list.
+The optional footer does not establish consent or replace your legal
+responsibilities.
+
 ## 7. Deliverability
 
 We do not guarantee that an email will be delivered, reach an inbox rather
@@ -88,15 +93,11 @@ and a licence provider when you activate a licence key. Those services are
 subject to their own terms and availability. If they change or become
 unavailable, some Software features may stop working.
 
-## 10. Limitation of liability
+## 10. Your legal rights
 
-To the maximum extent permitted by law, we are not liable for indirect,
-incidental, special, consequential, or punitive damages, or for lost profits,
-lost data, lost goodwill, or damage to your email reputation.
-
-Our total aggregate liability is limited to the amount you actually paid for
-the Software in the twelve months before the claim. Nothing in these Terms
-limits liability that cannot lawfully be limited.
+Nothing in these Terms excludes or limits any liability, warranty, right, or
+remedy where applicable law does not permit it to be excluded or limited. You
+keep the mandatory rights and remedies provided by the laws that apply to you.
 
 ## 11. Termination
 
@@ -109,9 +110,10 @@ request deletion of your GmailSmith account.
 ## 12. Governing law and disputes
 
 These Terms are governed by the laws of Pakistan. Courts located in Lahore,
-Punjab, Pakistan, will have jurisdiction over disputes, subject to any
-mandatory consumer protections or other rights that apply to you and cannot be
-waived.
+Punjab, Pakistan, may hear disputes, subject to mandatory consumer protections
+and other non-waivable rights that apply to you. This clause does not prevent
+you from bringing a claim in another court or forum where applicable law gives
+you that right.
 
 ## 13. Contact
 
