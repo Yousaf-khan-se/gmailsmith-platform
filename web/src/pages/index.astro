@@ -13,11 +13,13 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       <p class="eyebrow">
         Desktop app for Windows{site.availability === 'waitlist' ? ' · Public release pending' : ''}
       </p>
-      <h1>Mail merge for Gmail that <em>never uploads your list</em></h1>
+      <h1>Mail merge in Gmail from a CSV</h1>
       <p class="lede">
-        GmailSmith helps you personalize Gmail messages from CSV rows. Your
-        recipient list and campaign history stay on your computer; the app
-        sends each message through the Gmail account you connect.
+        GmailSmith is a Windows desktop app for mail merge in Gmail from a CSV.
+        Each row becomes a personalized message: the email column identifies
+        its recipient, and other columns become merge fields. Your CSV and
+        campaign history stay on your computer; messages are sent through the
+        Gmail account you connect.
       </p>
       {site.availability === 'waitlist' ? (
         <div id="waitlist" class="waitlist-card">
