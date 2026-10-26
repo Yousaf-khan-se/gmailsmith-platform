@@ -1,7 +1,5 @@
 ---
-// Firebase action page: completes the VERIFY_EMAIL code from the
-// verification email (docs/11 §11.5 — action URL configured in the
-// Firebase console templates to point here, P5 checklist).
+// Firebase action page for VERIFY_EMAIL and VERIFY_AND_CHANGE_EMAIL links.
 import Base from '../layouts/Base.astro';
 ---
 
@@ -9,6 +7,9 @@ import Base from '../layouts/Base.astro';
   <article class="container doc">
     <h1>Verify your email</h1>
     <p id="verifyStatus" role="status">Checking the verification link…</p>
+    <button id="confirmEmailChange" type="button" hidden>
+      Confirm email change
+    </button>
   </article>
 
   <style>
@@ -17,12 +18,15 @@ import Base from '../layouts/Base.astro';
     #verifyStatus { color: var(--text-muted); font-size: 15.5px; }
     #verifyStatus.ok { color: var(--green); font-weight: 600; }
     #verifyStatus.bad { color: #f87171; }
+    #confirmEmailChange { margin-top: 16px; }
   </style>
 
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-    import { getAuth, applyActionCode } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+    import { getAuth, applyActionCode, checkActionCode }
+      from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
     import { firebaseWebConfig } from '../firebaseWebConfig';
+    import { prepareVerifyAction } from '../lib/verifyAction.js';
 
     const status = document.getElementById('verifyStatus');
     const params = new URLSearchParams(window.location.search);
@@ -30,15 +34,35 @@ import Base from '../layouts/Base.astro';
     const oobCode = params.get('oobCode');
 
     async function verify() {
-      if (mode !== 'verifyEmail') {
-        throw new Error('This link is not a verification link. Open the link from your inbox instead.');
-      }
-      if (!oobCode) {
-        throw new Error('The link is missing its code — request a new verification email from the app.');
-      }
       const app = initializeApp(firebaseWebConfig);
-      await applyActionCode(getAuth(app), oobCode);
-      status.textContent = 'Verified! You can close this page and return to GmailSmith.';
+      const auth = getAuth(app);
+      const action = await prepareVerifyAction({
+        mode,
+        oobCode,
+        auth,
+        checkActionCode,
+        applyActionCode,
+      });
+      if (action.kind === 'confirmation') {
+        status.textContent = action.message;
+        const button = document.getElementById('confirmEmailChange');
+        button.hidden = false;
+        button.addEventListener('click', async () => {
+          button.disabled = true;
+          try {
+            status.textContent = await action.confirm();
+            status.classList.remove('bad');
+            status.classList.add('ok');
+            button.hidden = true;
+          } catch (err) {
+            status.textContent = err.message || 'This link expired. Request another email change from GmailSmith.';
+            status.classList.add('bad');
+            button.disabled = false;
+          }
+        });
+        return;
+      }
+      status.textContent = action.message;
       status.classList.add('ok');
     }
 

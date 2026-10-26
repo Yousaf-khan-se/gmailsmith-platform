@@ -1,6 +1,6 @@
 # GmailSmith — Privacy Policy
 
-**Last updated: October 25, 2026**
+**Last updated: October 26, 2026**
 
 ## The short version
 
@@ -13,7 +13,7 @@ Google through Gmail for delivery.
 To sign in to GmailSmith, Google Firebase Authentication processes your account
 identity. To connect Gmail for sending, GmailSmith requests the Gmail
 send-only permission. This policy explains what is sent, where it is stored,
-and how to request account deletion.
+and how to delete your GmailSmith account and this computer's local data.
 
 ## Information and where it is stored
 
@@ -23,17 +23,18 @@ When you create or use a GmailSmith account, the app sends your email address,
 display name or username, and authentication information to Google Firebase
 Authentication over HTTPS. Firebase manages the account, password
 authentication (if used), email verification and reset messages, and
-authentication records such as the sign-in provider and sign-in times.
+authentication records such as linked sign-in methods and sign-in times.
 GmailSmith does not store your password.
 
 The app also stores a local sign-in session on your computer so you can stay
 signed in. On Windows, the session tokens are protected with current-user
 Windows DPAPI before they are stored in the app database. Credential storage is
 currently supported on Windows; macOS and Linux builds do not persist
-credentials or send email. If you opt in to product-update emails during
-registration, the app stores the consent choice and its timestamp locally.
-You can ask us to delete your Firebase account by emailing
-support@gmailsmith.app.
+credentials or send email. The current app does not offer product-update
+consent or send product-update emails. Use **Settings → Delete GmailSmith
+account** to delete your Firebase account after reauthentication. Your local
+campaigns, CSVs, senders and history remain on this computer and are available
+after another account signs in here.
 
 ### Website availability waitlist
 
@@ -97,23 +98,20 @@ with the parties listed here:
 | Recipient | Google user data shared and purpose |
 | :--- | :--- |
 | **Google LLC — Google OAuth and Gmail services** | Google OAuth receives the authorization code to exchange it for tokens and receives the refresh token when GmailSmith refreshes access. Google returns the tokens to the app, where they are stored on your computer. GmailSmith uses Google's OpenID Connect user-info service to identify the connected sender address. If you choose Gmail SMTP, Google's SMTP service receives your sender address and Gmail App Password for authentication. When you send a campaign or test message, Gmail API or Gmail SMTP receives the recipient address, subject, message body, and any attachments you selected so Google can deliver that message. |
-| **Google Firebase Authentication** | If you choose Google sign-in for your separate GmailSmith account, the app sends the Google sign-in ID token to Firebase Authentication. Firebase processes the Google account email address and basic identity information to create or sign in to your GmailSmith account and returns the Firebase account identity and session tokens. This account sign-in is separate from connecting a Gmail sender. |
-| **Cloudflare — account-security endpoint (deferred)** | If you choose **Sign out all sessions** and reauthentication succeeds, the app sends a fresh Firebase ID token over HTTPS to `gmailsmith.app/api/account/revoke-sessions`. Cloudflare receives that request. The dedicated account-security Worker is not currently deployed, so remote Firebase session revocation is unavailable; the app still clears this device, while sessions on other devices may remain active. If enabled in a future update, the Worker will verify the token and ask Firebase to revoke refresh tokens for the verified user. The Worker is designed not to persist or log the token or user ID. It does not receive Gmail sender tokens, recipient lists, or message content. |
+| **Google Firebase Authentication** | For Google sign-in, the app sends the Google sign-in ID token to Firebase Authentication. Firebase processes the account email, display name and linked sign-in methods and returns the Firebase account identity and session tokens. When you delete your GmailSmith account, the app sends a freshly authenticated Firebase ID token to Firebase to delete that identity. This account sign-in is separate from connecting a Gmail sender. |
 | **The email recipients you select** | Google delivers the message, including its subject, body, and attachments, to the addresses you chose. Those recipients and their email providers receive and process the message as part of delivery. GmailSmith does not choose recipients for you. |
 
 The GmailSmith desktop app stores the connected sender address and OAuth
-tokens on your computer. Apart from the explicit session-revocation request
-described above, the app does not upload Gmail mailbox data, sender tokens,
-recipient lists, or message content to the GmailSmith website or to the
+tokens on your computer. The app does not upload Gmail mailbox data, sender
+tokens, recipient lists, or message content to the GmailSmith website or to the
 developer. Cloudflare website hosting, the waitlist, Resend (if used for the
 one-time availability notice), licence-validation providers, and font or
-script providers do not receive Gmail sender data from the app. If you request
-global sign-out and successfully reauthenticate, Cloudflare receives the Firebase ID token sent to the
-account-security endpoint; while the dedicated Worker is undeployed, it cannot
-perform remote revocation. These services may receive the separate information
-described in this policy for their own functions. If you choose to send
-information to support yourself, only the information you include in that
-message is shared with support.
+script providers do not receive Gmail sender data from the app. Account
+deletion sends a freshly authenticated Firebase ID token to Firebase itself;
+it does not send local campaigns or sender credentials. These services may
+receive the separate information described in this policy for their own
+functions. If you choose to send information to support yourself, only the
+information you include in that message is shared with support.
 
 Apart from the feature-specific sharing described above and information you
 choose to send directly to support, GmailSmith does not transfer or disclose
@@ -128,7 +126,7 @@ These items are stored locally on your computer:
 
 | Location | Contents |
 | :--- | :--- |
-| %LOCALAPPDATA%\GmailSmith\campaigns.db | Connected sender account details, campaign history and row-level results, CSV email-column mappings, opt-out list, settings, and local sign-in session. On Windows, Gmail sender credentials, Firebase session tokens and licence keys use DPAPI-protected envelopes. |
+| %LOCALAPPDATA%\GmailSmith\campaigns.db | Device-wide connected sender details, campaign history and row-level results, CSV email-column mappings, opt-out list, settings, and current local sign-in session. Sender connections and campaign data are not assigned to a Firebase account; they remain available when you switch accounts. On Windows, Gmail sender credentials, Firebase session tokens and licence keys use DPAPI-protected envelopes. |
 | %LOCALAPPDATA%\GmailSmith\uploads\ | CSV files you import and attachments you upload |
 | %LOCALAPPDATA%\GmailSmith\credentials\ | Your own Google Cloud OAuth client file, if you use the OAuth connection method |
 | %LOCALAPPDATA%\GmailSmith\logs\ | A rotating diagnostic log |
@@ -144,10 +142,10 @@ After restoring, sign in again, reconnect sender accounts, and re-enter the
 licence key. Backups created by older versions may contain plaintext
 credentials. If an older archive was lost or shared, revoke exposed Gmail OAuth
 access in Google Account connections, remove any exposed Gmail App Password,
-and reset your GmailSmith password. The current **Sign out all sessions**
-action clears only this device because remote revocation is deferred. Contact
-support if a licence key may have been exposed. Treat all old archives as
-sensitive and delete any copies you control.
+and reset your GmailSmith password or delete the GmailSmith account from
+Settings. Account deletion does not erase local campaigns and sender data.
+Contact support if a licence key may have been exposed. Treat all old archives
+as sensitive and delete any copies you control.
 
 ## Other network connections
 
@@ -155,14 +153,10 @@ The app makes network connections for these functions:
 
 - **Account sign-in:** Google Firebase Authentication processes your account
   identity and authentication requests.
-- **Global session revocation (deferred):** if you choose **Sign out all
-  sessions**, the app reauthenticates with your GmailSmith password and sends a
-  fresh Firebase ID token to the Cloudflare endpoint over HTTPS. The dedicated
-  account-security Worker is not deployed, so remote revocation is currently
-  unavailable; the app signs out this device and other sessions may remain
-  active. If enabled in a future update, the Worker will verify the token and
-  ask Firebase to revoke refresh tokens. Already-issued Firebase ID tokens may
-  remain valid until expiry, for up to about one hour.
+- **Account deletion:** after reauthentication, the app sends a fresh Firebase
+  ID token to Firebase over HTTPS to delete the current Firebase account. The
+  app then signs out this device. Device-local campaigns, sender connections,
+  CSVs, attachments and history remain on this computer.
 - **Sending email:** Google Gmail API or Gmail SMTP receives the messages you
   choose to send and delivers them to your recipients.
 - **Release checks:** GmailSmith checks the public release manifest at
@@ -184,7 +178,7 @@ The app does not include advertising, analytics, or crash-reporting services.
 | :--- | :--- |
 | Google Firebase Authentication | GmailSmith account registration and sign-in |
 | Google (OAuth and Gmail API/SMTP) | Identify the selected Google account and deliver the emails you send |
-| Cloudflare, the website host, Turnstile provider, D1 provider, and account-security endpoint | Serve the public site, validate and store the one-time availability waitlist, and host the endpoint used for an explicitly requested Firebase session revocation. The dedicated revocation Worker is not deployed; if the feature is enabled later, the Worker will receive a fresh Firebase ID token for verification and use the verified user ID for a short-lived rate-limit key without persisting or logging it. |
+| Cloudflare, website host, Turnstile provider and D1 provider | Serve the public site and validate/store the one-time availability waitlist. They do not receive Gmail sender credentials, recipient lists or message content from the desktop app. |
 | Resend, if used for launch notice delivery | Import and deliver the one-time availability email to people who requested it |
 | Licence provider, if you activate a key | Validate the key and its plan status |
 | Public font and script providers | Load interface resources |
@@ -206,16 +200,16 @@ legal responsibilities.
 
 - **Local data:** Use the app's Settings option to delete local app data. You
   can export campaign history and opt-outs from the app before deleting them.
-- **GmailSmith account:** Email support@gmailsmith.app to request deletion of
-  your Firebase Authentication account. Account deletion does not remove
-  campaign files or local data from your computer; delete those separately in
-  the app.
+- **GmailSmith account:** Use **Settings → Delete GmailSmith account** and
+  reauthenticate. This deletes the Firebase identity and its linked sign-in
+  methods. Local campaigns, CSVs, sender connections, attachments and history
+  remain on this computer; use **Delete all local data** separately if you
+  also want to erase them.
 - **Google access:** You can review or revoke GmailSmith's Google access in
   your Google Account security settings. Revoking access prevents further
   Gmail API use until you reconnect.
-- **Product updates:** The optional product-update checkbox is off by default.
-  Its consent timestamp is stored locally. You may withdraw consent by
-  contacting support@gmailsmith.app.
+- **Product updates:** The current app does not collect product-update
+  consent or send product-update emails.
 - **Availability waitlist:** You may ask us to remove your address at any time
   by emailing support@gmailsmith.app. Waitlist signup authorizes only one email
   announcing that public downloads are available; it does not authorize ongoing
@@ -227,9 +221,7 @@ Firebase account is deleted, subject to any legal retention requirements.
 
 ## Security
 
-- Google, Firebase, and the account-security endpoint connection use HTTPS.
-  The dedicated account-security Worker is not currently deployed, so remote
-  Firebase session revocation is unavailable.
+- Google and Firebase connections use HTTPS.
 - On Windows, Gmail OAuth tokens, SMTP App Passwords, Firebase sessions and
   licence keys are protected with current-user DPAPI before SQLite storage.
   This ties them to the Windows profile but cannot protect them from malicious
