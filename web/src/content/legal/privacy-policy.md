@@ -98,18 +98,19 @@ with the parties listed here:
 | :--- | :--- |
 | **Google LLC — Google OAuth and Gmail services** | Google OAuth receives the authorization code to exchange it for tokens and receives the refresh token when GmailSmith refreshes access. Google returns the tokens to the app, where they are stored on your computer. GmailSmith uses Google's OpenID Connect user-info service to identify the connected sender address. If you choose Gmail SMTP, Google's SMTP service receives your sender address and Gmail App Password for authentication. When you send a campaign or test message, Gmail API or Gmail SMTP receives the recipient address, subject, message body, and any attachments you selected so Google can deliver that message. |
 | **Google Firebase Authentication** | If you choose Google sign-in for your separate GmailSmith account, the app sends the Google sign-in ID token to Firebase Authentication. Firebase processes the Google account email address and basic identity information to create or sign in to your GmailSmith account and returns the Firebase account identity and session tokens. This account sign-in is separate from connecting a Gmail sender. |
-| **Cloudflare — account-security Worker** | Only when you choose **Sign out all sessions**, the app sends a fresh Firebase ID token to the Worker over HTTPS. The Worker verifies the token and asks Firebase to revoke refresh tokens for the UID in that verified token. Cloudflare's rate-limit service uses the verified UID as a short-lived key to enforce request limits. The Worker does not persist or log the token or UID. It does not receive Gmail sender tokens, recipient lists, or message content. |
+| **Cloudflare — account-security endpoint (deferred)** | If you choose **Sign out all sessions** and reauthentication succeeds, the app sends a fresh Firebase ID token over HTTPS to `gmailsmith.app/api/account/revoke-sessions`. Cloudflare receives that request. The dedicated account-security Worker is not currently deployed, so remote Firebase session revocation is unavailable; the app still clears this device, while sessions on other devices may remain active. If enabled in a future update, the Worker will verify the token and ask Firebase to revoke refresh tokens for the verified user. The Worker is designed not to persist or log the token or user ID. It does not receive Gmail sender tokens, recipient lists, or message content. |
 | **The email recipients you select** | Google delivers the message, including its subject, body, and attachments, to the addresses you chose. Those recipients and their email providers receive and process the message as part of delivery. GmailSmith does not choose recipients for you. |
 
 The GmailSmith desktop app stores the connected sender address and OAuth
-tokens on your computer. Apart from the explicit session-revocation action
+tokens on your computer. Apart from the explicit session-revocation request
 described above, the app does not upload Gmail mailbox data, sender tokens,
 recipient lists, or message content to the GmailSmith website or to the
 developer. Cloudflare website hosting, the waitlist, Resend (if used for the
 one-time availability notice), licence-validation providers, and font or
-script providers do not receive Gmail sender data from the app. Cloudflare's
-account-security Worker receives a Firebase session token only when you
-request global sign-out. These services may receive the separate information
+script providers do not receive Gmail sender data from the app. If you request
+global sign-out and successfully reauthenticate, Cloudflare receives the Firebase ID token sent to the
+account-security endpoint; while the dedicated Worker is undeployed, it cannot
+perform remote revocation. These services may receive the separate information
 described in this policy for their own functions. If you choose to send
 information to support yourself, only the information you include in that
 message is shared with support.
@@ -143,7 +144,8 @@ After restoring, sign in again, reconnect sender accounts, and re-enter the
 licence key. Backups created by older versions may contain plaintext
 credentials. If an older archive was lost or shared, revoke exposed Gmail OAuth
 access in Google Account connections, remove any exposed Gmail App Password,
-reset your GmailSmith password or use **Sign out all sessions**, and contact
+and reset your GmailSmith password. The current **Sign out all sessions**
+action clears only this device because remote revocation is deferred. Contact
 support if a licence key may have been exposed. Treat all old archives as
 sensitive and delete any copies you control.
 
@@ -153,14 +155,14 @@ The app makes network connections for these functions:
 
 - **Account sign-in:** Google Firebase Authentication processes your account
   identity and authentication requests.
-- **Global session revocation:** if you choose **Sign out all sessions**, the
-  app reauthenticates with your GmailSmith password and sends a fresh Firebase
-  ID token to a Cloudflare Worker over HTTPS. The Worker verifies the token and
-  asks Firebase to revoke refresh tokens for that user. The Worker does not
-  persist or log the token or UID; Cloudflare's rate-limit service uses the UID
-  as a short-lived key. Already-issued Firebase ID tokens may remain
-  valid until expiry, for up to about one hour. The app signs out this device
-  whether or not the Worker confirms remote revocation.
+- **Global session revocation (deferred):** if you choose **Sign out all
+  sessions**, the app reauthenticates with your GmailSmith password and sends a
+  fresh Firebase ID token to the Cloudflare endpoint over HTTPS. The dedicated
+  account-security Worker is not deployed, so remote revocation is currently
+  unavailable; the app signs out this device and other sessions may remain
+  active. If enabled in a future update, the Worker will verify the token and
+  ask Firebase to revoke refresh tokens. Already-issued Firebase ID tokens may
+  remain valid until expiry, for up to about one hour.
 - **Sending email:** Google Gmail API or Gmail SMTP receives the messages you
   choose to send and delivers them to your recipients.
 - **Release checks:** GmailSmith checks the public release manifest at
@@ -182,7 +184,7 @@ The app does not include advertising, analytics, or crash-reporting services.
 | :--- | :--- |
 | Google Firebase Authentication | GmailSmith account registration and sign-in |
 | Google (OAuth and Gmail API/SMTP) | Identify the selected Google account and deliver the emails you send |
-| Cloudflare, the website host, Turnstile provider, D1 provider, and account-security Worker | Serve the public site, validate and store the one-time availability waitlist, and process an explicitly requested Firebase session revocation. The Worker receives a fresh Firebase ID token for that request, does not persist or log the token or UID, and uses the verified UID as a short-lived rate-limit key. |
+| Cloudflare, the website host, Turnstile provider, D1 provider, and account-security endpoint | Serve the public site, validate and store the one-time availability waitlist, and host the endpoint used for an explicitly requested Firebase session revocation. The dedicated revocation Worker is not deployed; if the feature is enabled later, the Worker will receive a fresh Firebase ID token for verification and use the verified user ID for a short-lived rate-limit key without persisting or logging it. |
 | Resend, if used for launch notice delivery | Import and deliver the one-time availability email to people who requested it |
 | Licence provider, if you activate a key | Validate the key and its plan status |
 | Public font and script providers | Load interface resources |
@@ -225,7 +227,9 @@ Firebase account is deleted, subject to any legal retention requirements.
 
 ## Security
 
-- Google, Firebase and the account-security Worker connections use HTTPS.
+- Google, Firebase, and the account-security endpoint connection use HTTPS.
+  The dedicated account-security Worker is not currently deployed, so remote
+  Firebase session revocation is unavailable.
 - On Windows, Gmail OAuth tokens, SMTP App Passwords, Firebase sessions and
   licence keys are protected with current-user DPAPI before SQLite storage.
   This ties them to the Windows profile but cannot protect them from malicious
