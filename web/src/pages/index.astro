@@ -11,15 +11,14 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
   <section style="padding: 88px 0 64px;">
     <div class="container hero">
       <p class="eyebrow">
-        Desktop app for Windows{site.availability === 'waitlist' ? ' · Public release pending' : ''}
+        A simple email app for Windows{site.availability === 'waitlist' ? ' · Public release pending' : ''}
       </p>
-      <h1>Mail merge in Gmail from a CSV</h1>
+      <h1>Mail merge in Gmail from a CSV — made simple</h1>
       <p class="lede">
-        GmailSmith is a Windows desktop app for mail merge in Gmail from a CSV.
-        Each row becomes a personalized message: the email column identifies
-        its recipient, and other columns become merge fields. Your CSV and
-        campaign history stay on your computer; messages are sent through the
-        Gmail account you connect.
+        Write one message and personalize it for everyone on your list. Put one
+        email address on each row of your spreadsheet, add details like names,
+        and GmailSmith fills them into each message. Your list and sending
+        history stay on your computer.
       </p>
       {site.availability === 'waitlist' ? (
         <div id="waitlist" class="waitlist-card">
@@ -80,8 +79,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
             <p id="downloadMeta" class="download-meta">Fetching the latest release…</p>
           </div>
           <p class="smarthint">
-            Windows will show <strong>“Windows protected your PC”</strong> on first
-            run — it’s expected for a new, unsigned installer. <a href="/install">Show me the two-click fix →</a>
+            Windows may show a warning the first time you open this new app. This
+            is expected. <a href="/install">See the short guide to open it →</a>
           </p>
         </>
       )}
@@ -91,43 +90,38 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
   <section class="band">
     <div class="container feature-grid">
       <div>
-        <h3>Your data stays put</h3>
-        <p>CSVs, contacts and campaign history in the desktop app live on your
-          computer. When you send, only the chosen message travels through Gmail
-          to its recipient. Waitlist emails are stored separately by Cloudflare
-          only for the one availability notice.</p>
+        <h3>Your list stays on your computer</h3>
+        <p>GmailSmith keeps your spreadsheet and sending history on your
+          computer. Messages are sent through the Gmail account you choose.</p>
       </div>
       <div>
-        <h3>Two ways to connect</h3>
-        <p>One-click Google sign-in or a Gmail App Password — connect your
-          existing Gmail and start sending. Nothing else to set up.</p>
+        <h3>Choose which Gmail account sends</h3>
+        <p>Your GmailSmith sign-in and sending account are separate. Connect
+          the Gmail address you want to send from; it can be different from
+          your sign-in.</p>
       </div>
       <div>
-        <h3>Personalize each row</h3>
-        <p>Each CSV recipient row needs an email address. Other column headers
-          become merge fields you can place in your subject and message body.</p>
+        <h3>Write once, personalize every message</h3>
+        <p>Add names, order numbers, or other details to your spreadsheet.
+          GmailSmith fills them into each message for you.</p>
       </div>
       <div>
-        <h3>Live campaign tracking</h3>
-        <p>Progress bar, per-recipient results, retries on Gmail throttling,
-          opt-out list, and a full history you can export to CSV.</p>
+        <h3>See what happened</h3>
+        <p>Follow sending progress, see which messages need attention, and
+          review or export your sending history.</p>
       </div>
     </div>
   </section>
 
   <section class="google-data">
     <div class="container">
-      <h2 class="section-title">What Google access does GmailSmith use?</h2>
+      <h2 class="section-title">What can GmailSmith do with your Google account?</h2>
       <p>
-        Google Account identity information is used to sign you in. GmailSmith
-        requests the Gmail <code>gmail.send</code> permission when you
-        connect Gmail, so it can send messages you prepare. It cannot read
-        your inbox, drafts, or contacts. The use of information received from
-        Google Workspace scopes adheres to the
-        <a href="https://developers.google.com/terms/api-services-user-data-policy"
-           target="_blank" rel="noreferrer">Google API Services User Data Policy</a>,
-        including its Limited Use requirements. See the
-        <a href="/privacy">Privacy Policy</a> for details.
+        Google uses your name and email address to sign you in. When you connect
+        Gmail, GmailSmith can send the messages you prepare. It cannot read your
+        inbox, drafts, or contacts. Read our <a href="/privacy">Privacy Policy</a>
+        or <a href="https://developers.google.com/terms/api-services-user-data-policy"
+        target="_blank" rel="noreferrer">Google’s policy for apps that use Google data</a>.
       </p>
     </div>
   </section>
@@ -175,8 +169,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       {!site.purchaseUrl && (
         <p class="store-note">
           {site.availability === 'waitlist'
-            ? 'Downloads are not available yet. The Free plan will be available when public downloads open; paid checkout is coming soon.'
-            : 'The Free plan is available now. Paid checkout is coming soon.'}
+            ? 'Downloads are not available yet. The Free plan will be available when public downloads open; paid plans are coming soon.'
+            : 'The Free plan is available now. Paid plans are coming soon.'}
         </p>
       )}
     </div>
@@ -187,25 +181,23 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       <h2 class="section-title">Questions, answered</h2>
       <div class="faq">
         <details>
-          <summary>Does my recipient data go to GmailSmith?</summary>
-          <p>Your campaign lists and history stay on your computer. The app
-            sends each message through Google Gmail to the recipient you chose.
-            Google Firebase Authentication processes your account email and
-            display name for sign-in. We do not upload your campaign list to
-            GmailSmith or use it for analytics. See the
+          <summary>Does GmailSmith upload my contact list?</summary>
+          <p>No. Your list and sending history stay on your computer. When you
+            send, Gmail delivers each message to the address you chose. We use
+            your sign-in name and email address to manage your GmailSmith
+            account. See the
             <a href="/privacy">Privacy Policy</a>.</p>
         </details>
         <details>
-          <summary>Do I need to configure anything?</summary>
-          <p>No. Sign in with Google in one click, or use a Gmail App Password
-            if you prefer — either way you’re sending your first campaign in
-            minutes.</p>
+          <summary>How do I get started?</summary>
+          <p>Download and install GmailSmith, sign in, and connect the Gmail
+            account you want to send from. Choose a spreadsheet, write your
+            message, preview it, and send.</p>
         </details>
         <details>
-          <summary>What about Windows SmartScreen warnings?</summary>
-          <p>The installer isn’t code-signed yet, so the warning is expected. <a
-            href="/install">This page</a> shows the exact two clicks to
-            proceed safely.</p>
+          <summary>Why does Windows show a warning?</summary>
+          <p>Windows may show a warning because GmailSmith is a new app. See
+            our <a href="/install">short guide</a> for how to open it.</p>
         </details>
         <details>
           <summary>Is there really a free plan?</summary>
@@ -216,8 +208,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         <details>
           <summary>Can I buy a paid plan today?</summary>
           <p>{site.availability === 'waitlist'
-            ? 'No. Public downloads and paid checkout are not open yet. We do not have a release date yet.'
-            : 'Paid checkout is not available yet. We will show the final plan, billing and cancellation details before checkout opens.'}</p>
+            ? 'No. Public downloads and paid plans are not available yet. We do not have a release date yet.'
+            : 'Not yet. We will share billing and cancellation details before paid plans become available.'}</p>
         </details>
         {site.availability === 'waitlist' && (
           <details>
