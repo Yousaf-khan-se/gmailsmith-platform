@@ -69,6 +69,16 @@ const canonical = new URL(path, site.url).toString();
         backdrop-filter: blur(8px);
         border-bottom: 1px solid var(--border);
       }
+      .beta-announcement {
+        padding: 6px 16px;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text-muted);
+        font-size: 13px;
+        line-height: 1.4;
+        text-align: center;
+      }
+      .beta-announcement strong { color: var(--accent); }
       .site-header .container {
         display: flex; align-items: center; justify-content: space-between;
         height: 60px;
@@ -119,6 +129,12 @@ const canonical = new URL(path, site.url).toString();
     </style>
   </head>
   <body>
+    {site.availability === 'download' && (
+      <aside class="beta-announcement" role="note" aria-label="Beta announcement">
+        <strong>GmailSmith is in beta.</strong> The free plan is available now;
+        paid plans are coming soon.
+      </aside>
+    )}
     <header class="site-header">
       <div class="container">
         <a class="brand" href="/">

@@ -1,7 +1,7 @@
 ---
-// Public landing page and pricing. While Gmail scope verification is pending,
-// the primary path is a one-time availability waitlist; the release-manifest
-// download path remains available behind site.availability for launch.
+// Public landing page and pricing. While public beta release checks are in
+// progress, the primary path is a one-time availability waitlist; the
+// release-manifest download path remains available behind site.availability.
 import Base from '../layouts/Base.astro';
 import { site, pricing } from '../site';
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
@@ -25,8 +25,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         <div id="waitlist" class="waitlist-card">
           <h2>Get one email when GmailSmith is available</h2>
           <p class="waitlist-intro">
-            Public downloads are paused while Google reviews Gmail sending access.
-            We don’t have a release date yet. Join the list for one availability
+            Public downloads are not open yet while we finish release
+            preparation. We don’t have a release date yet. Join the list for one availability
             email — no newsletter or recurring marketing.
           </p>
           {turnstileSiteKey ? (
@@ -216,7 +216,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         <details>
           <summary>Can I buy a paid plan today?</summary>
           <p>{site.availability === 'waitlist'
-            ? 'No. Public downloads and paid checkout are not open while Google reviews Gmail sending access. We do not have a release date yet.'
+            ? 'No. Public downloads and paid checkout are not open yet. We do not have a release date yet.'
             : 'Paid checkout is not available yet. We will show the final plan, billing and cancellation details before checkout opens.'}</p>
         </details>
         {site.availability === 'waitlist' && (

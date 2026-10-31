@@ -32,11 +32,17 @@ From this directory:
    npx wrangler secret put TURNSTILE_SECRET_KEY
    ```
 
-5. Deploy this Worker, then publish the Astro site with its waitlist form:
+5. Deploy this waitlist Worker from this directory:
 
    ```powershell
    npm run deploy
    ```
+
+6. Publish the Astro site separately through the configured Cloudflare
+   Workers Builds project. Its repository root is `web/`; the build command is
+   `npm run build` and deployment uses the committed `web/wrangler.jsonc`
+   configuration. The waitlist Worker's `npm run deploy` does not publish the
+   static site.
 
 The route is limited to `/api/waitlist*`; the existing static site and release
 routes are unchanged. Set the same consent version (`v1`) in this Worker and
