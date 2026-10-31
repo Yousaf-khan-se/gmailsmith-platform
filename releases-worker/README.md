@@ -24,6 +24,10 @@ Serves `gmailsmith.app/releases/*` from the private R2 bucket
 # 1. build (app repo)
 python tools/build.py
 
+# For a mandatory-update release, pass the minimum supported version instead:
+# e.g. after the fleet has moved to 1.0.2, build 1.0.3 with:
+# python tools/build.py --force-below 1.0.2
+
 # 2. upload (platform repo, credentials in the environment)
 python releases-upload/upload_release.py --dist ../../gmail-merge/dist
 ```
@@ -31,3 +35,7 @@ python releases-upload/upload_release.py --dist ../../gmail-merge/dist
 `latest.json` is served with `max-age=60`; artifacts get a day of caching and
 `Content-Disposition: attachment`. The app's update banner polls
 `/releases/latest.json` cross-origin — CORS is open (`*`) on purpose.
+The manifest's optional `force_below` field is checked before sign-in and
+outdated clients receive a direct link to the installer named in the manifest.
+Leave the field unset on the first release with this screen so legacy clients
+can migrate using their existing optional homepage prompt.

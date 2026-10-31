@@ -36,6 +36,21 @@ pip install -r requirements.txt
 python upload_release.py --dist ../../gmail-merge/dist
 ```
 
+The upload script validates the installer filename, size and SHA-256 against
+`latest.json`, and rejects an invalid `force_below` floor before contacting R2.
+Run its local validation suite with:
+
+```powershell
+python -m unittest discover -s releases-upload -p "test_*.py"
+```
+
+The check verifies the release installer against the manifest using a
+streaming SHA-256 pass, so it does not load the installer into memory.
+
+To require a minimum version, pass `--force-below <minimum-version>` to
+`tools/build.py` in the app repo. Omit it for ordinary updates and for the
+first migration release that adds the direct update screen.
+
 Environment for uploads (never commit): `R2_ACCOUNT_ID`,
 `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET` (default
 `gmailsmith-releases`).

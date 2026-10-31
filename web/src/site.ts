@@ -19,7 +19,7 @@ export const site = {
   purchaseUrl: '',
   availability: 'waitlist' as 'waitlist' | 'download',
   waitlistConsentVersion: 'v1',
-  version: '1.0.0',
+  version: '1.0.2',
   releases: {
     manifest: '/releases/latest.json',
     base: '/releases/',

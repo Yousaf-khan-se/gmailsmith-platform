@@ -21,13 +21,30 @@ Python-only, consistent with the rest of the tooling.
 """
 
 import argparse
+import hashlib
 import json
 import os
+import re
 import sys
 from pathlib import Path
 
 DEFAULT_BUCKET = 'gmailsmith-releases'
 ARTIFACT_PATTERNS = ('*.exe', 'latest.json', 'SHA256SUMS.txt')
+VERSION_PATTERN = re.compile(r'^\d+(?:\.\d+){1,3}$')
+INSTALLER_PATTERN = re.compile(
+    r'^GmailSmithSetup-(\d+(?:\.\d+){1,3})\.exe$')
+SHA256_PATTERN = re.compile(r'^[a-f0-9]{64}$', re.IGNORECASE)
+
+
+def _sha256_file(path: Path, chunk_size=1 << 20):
+    digest = hashlib.sha256()
+    with path.open('rb') as handle:
+        while True:
+            chunk = handle.read(chunk_size)
+            if not chunk:
+                break
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def collect(dist: Path):
@@ -36,6 +53,64 @@ def collect(dist: Path):
     for pattern in ARTIFACT_PATTERNS:
         found.extend(sorted(dist.glob(pattern)))
     return found
+
+
+def _version_parts(value):
+    if not isinstance(value, str) or not VERSION_PATTERN.fullmatch(value):
+        raise ValueError(f'invalid version: {value!r}')
+    return tuple(int(part) for part in value.split('.'))
+
+
+def _compare_versions(left, right):
+    a = _version_parts(left)
+    b = _version_parts(right)
+    for index in range(max(len(a), len(b))):
+        left_part = a[index] if index < len(a) else 0
+        right_part = b[index] if index < len(b) else 0
+        if left_part != right_part:
+            return -1 if left_part < right_part else 1
+    return 0
+
+
+def validate_release_manifest(manifest, dist: Path):
+    """Validate the installer and optional update floor before any upload."""
+    if not isinstance(manifest, dict):
+        raise ValueError('latest.json must contain a JSON object')
+    version = manifest.get('version')
+    _version_parts(version)
+
+    installer = manifest.get('installer')
+    if not isinstance(installer, dict):
+        raise ValueError('latest.json must identify a Windows installer')
+    filename = installer.get('filename')
+    match = (INSTALLER_PATTERN.fullmatch(filename)
+             if isinstance(filename, str) else None)
+    if not match or _compare_versions(match.group(1), version) != 0:
+        raise ValueError('installer filename must match the release version')
+
+    size = installer.get('bytes')
+    if type(size) is not int or size <= 0:
+        raise ValueError('installer bytes must be a positive integer')
+    digest = installer.get('sha256')
+    if not isinstance(digest, str) or not SHA256_PATTERN.fullmatch(digest):
+        raise ValueError('installer sha256 must be a 64-character hex digest')
+
+    installer_path = dist / filename
+    if not installer_path.is_file():
+        raise ValueError(f'installer is missing from dist/: {filename}')
+    if installer_path.stat().st_size != size:
+        raise ValueError('installer size does not match latest.json')
+    actual_digest = _sha256_file(installer_path)
+    if actual_digest.lower() != digest.lower():
+        raise ValueError('installer checksum does not match latest.json')
+
+    if 'force_below' in manifest:
+        floor = manifest['force_below']
+        _version_parts(floor)
+        if _compare_versions(floor, version) > 0:
+            raise ValueError('force_below cannot be newer than release version')
+
+    return installer_path
 
 
 def main(argv=None):
@@ -65,9 +140,15 @@ def main(argv=None):
         print('ERROR: latest.json missing from dist/', file=sys.stderr)
         return 1
     try:
-        json.loads(manifest.read_text(encoding='utf-8'))
+        manifest_data = json.loads(manifest.read_text(encoding='utf-8'))
     except ValueError as exc:
         print(f'ERROR: latest.json is not valid JSON: {exc}', file=sys.stderr)
+        return 1
+
+    try:
+        validate_release_manifest(manifest_data, dist)
+    except (OSError, ValueError) as exc:
+        print(f'ERROR: invalid release manifest: {exc}', file=sys.stderr)
         return 1
 
     total = sum(f.stat().st_size for f in files)
