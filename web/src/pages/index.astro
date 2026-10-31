@@ -1,7 +1,7 @@
 ---
-// Public landing page and pricing. While public beta release checks are in
-// progress, the primary path is a one-time availability waitlist; the
-// release-manifest download path remains available behind site.availability.
+// Public landing page and pricing. Waitlist copy remains available while the
+// site is in waitlist mode; the public-beta download path uses the release
+// manifest when site.availability is set to 'download'.
 import Base from '../layouts/Base.astro';
 import { site, pricing } from '../site';
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
@@ -136,9 +136,9 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
     <div class="container">
       <h2 class="section-title">Simple pricing. Your list stays on your laptop.</h2>
       <p class="section-sub">
-        These plans and prices are planned and cannot be purchased while public
-        availability is pending. Join the waitlist to receive one email when
-        downloads open.
+        {site.availability === 'waitlist'
+          ? 'Pricing is confirmed. The Free plan will be available when public downloads open; paid plans are coming soon. Join the waitlist to receive one availability email.'
+          : 'Pricing is confirmed. The Free plan is available now; paid plans are coming soon.'}
       </p>
       <div class="pricing-grid">
         {pricing.map((tier) => (
@@ -164,7 +164,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
                 class:list={['btn', 'btn-block', tier.featured ? 'btn-primary' : 'btn-secondary']}
                 href={tier.id === 'free' ? '#download' : (tier.checkoutMonthly || site.purchaseUrl || '#pricing')}
                 aria-disabled={tier.id !== 'free' && !(tier.checkoutMonthly || site.purchaseUrl) ? 'true' : undefined}
-                title={tier.id !== 'free' && !(tier.checkoutMonthly || site.purchaseUrl) ? 'Checkout opens at launch' : undefined}
+                title={tier.id !== 'free' && !(tier.checkoutMonthly || site.purchaseUrl) ? 'Paid checkout is coming soon.' : undefined}
               >
                 {tier.cta}
               </a>
@@ -175,8 +175,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
       {!site.purchaseUrl && (
         <p class="store-note">
           {site.availability === 'waitlist'
-            ? 'The app and checkout are not currently available. Plan details may change before launch.'
-            : 'Paid checkout opens at launch; the Free plan is available now.'}
+            ? 'Downloads are not available yet. The Free plan will be available when public downloads open; paid checkout is coming soon.'
+            : 'The Free plan is available now. Paid checkout is coming soon.'}
         </p>
       )}
     </div>

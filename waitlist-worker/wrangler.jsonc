@@ -25,7 +25,7 @@
     "ALLOWED_ORIGIN": "https://gmailsmith.app",
     "CONSENT_VERSION": "v1",
     "TURNSTILE_EXPECTED_HOSTNAME": "gmailsmith.app",
-    "WAITLIST_OPEN": "true"
+    "WAITLIST_OPEN": "false"
   },
   "triggers": {
     "crons": ["17 4 * * *"]

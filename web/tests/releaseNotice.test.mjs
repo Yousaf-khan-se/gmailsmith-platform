@@ -6,6 +6,23 @@ const layout = await readFile(
   new URL('../src/layouts/Base.astro', import.meta.url), 'utf8',
 );
 const site = await readFile(new URL('../src/site.ts', import.meta.url), 'utf8');
+const landingPage = await readFile(
+  new URL('../src/pages/index.astro', import.meta.url), 'utf8',
+);
+const waitlistConfig = JSON.parse(await readFile(
+  new URL('../../waitlist-worker/wrangler.jsonc', import.meta.url), 'utf8',
+));
+
+test('public beta download mode closes waitlist intake', () => {
+  assert.match(site, /availability:\s*'download'/);
+  assert.equal(waitlistConfig.vars?.WAITLIST_OPEN, 'false');
+});
+
+test('download mode describes free availability and paid checkout accurately', () => {
+  assert.match(landingPage,
+    /Pricing is confirmed\. The Free plan is available now; paid plans are coming soon\./);
+  assert.doesNotMatch(landingPage, /Paid checkout opens at launch/);
+});
 
 test('beta announcement is shared-site chrome and only appears with downloads', () => {
   assert.match(layout, /site\.availability === 'download' && \(/);
