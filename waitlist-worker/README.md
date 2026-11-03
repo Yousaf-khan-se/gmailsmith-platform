@@ -1,9 +1,17 @@
 # GmailSmith waitlist Worker
 
-This Worker accepts the public, one-time availability waitlist at
+This Worker implements the one-time availability waitlist endpoint at
 `POST https://gmailsmith.app/api/waitlist`. It is separate from the Astro
 static-site Worker and the R2 release Worker. There is no public endpoint for
 listing or exporting addresses.
+
+## Live status (2026-11-01)
+
+The 1.0.2 public beta is live and intake is closed (`WAITLIST_OPEN=false`). The
+site is in download mode and the Worker is deployed with the closed setting.
+The previously consented list remains in D1 under the retention policy. It has
+not been exported or sent to a provider; no campaign-provider account is
+configured. The one-time notice below is future work, not a completed send.
 
 ## One-time Cloudflare setup
 
@@ -62,21 +70,22 @@ For progress measurement, use Cloudflare's aggregate request totals as a coarse
 site-traffic trend and the D1 signup count/source breakdown for waitlist
 conversion. No additional page-view tracker or marketing pixel is installed.
 
-## Close intake and send the launch notice
+## One-time launch notice (intake already closed)
 
-Do not export the final launch list while signup is open. A bulk update of all
-rows without a send timestamp is safe only after intake is closed and the final
-recipient snapshot has been taken.
+Intake is already closed and the site is in download mode. Do not export the
+final recipient list until an email provider is configured and the send is
+ready to proceed. A bulk update of rows without a send timestamp is safe only
+after intake is closed and the final recipient snapshot has been taken.
 
-After the installer, release manifest, onboarding, Gmail authorization flow,
-and Google approval are verified:
+Before sending, confirm the installer, release manifest, onboarding, Gmail
+authorization flow, and Google approval remain valid. The first two cutover
+steps below are complete; keep them as recovery instructions if intake is ever
+reopened:
 
-1. Set `WAITLIST_OPEN` to `false` in `wrangler.jsonc` and deploy this Worker.
-   This freezes new signups in D1.
-2. Change `availability` to `'download'` in `web/src/site.ts` and publish the
-   static site. This restores the manifest-driven download CTA and removes the
-   waitlist form.
-3. Export the frozen active list using the command below. Import it into the
+1. **Complete:** `WAITLIST_OPEN=false` is deployed. This freezes new signups in D1.
+2. **Complete:** `availability: 'download'` is published; the manifest-driven
+   download CTA is live and the waitlist form is removed.
+3. When ready, export the frozen active list using the command below. Import it into the
    email provider's audience and confirm the imported recipient count. The
    provider audience becomes the send source; securely delete the local CSV
    after verifying the import.

@@ -1,6 +1,6 @@
 # GmailSmith — Privacy Policy
 
-**Last updated: October 26, 2026**
+**Last updated: November 1, 2026**
 
 ## The short version
 
@@ -38,34 +38,34 @@ after another account signs in here.
 
 ### Website availability waitlist
 
-If you submit the waitlist form at gmailsmith.app, we collect the email address
-you provide, the time you asked to be notified, the consent-text version, and
-an optional campaign source label from the link you used. The form requires you
-to confirm: “Email me once when GmailSmith is available.” This is a request for
-one availability email only. It does not subscribe you to a newsletter or
-ongoing product marketing. We do not send a confirmation or other email when
-you join.
+While it was open, the waitlist form at gmailsmith.app collected the email
+address provided, the time of the request, the consent-text version, and an
+optional campaign source label from the link used. The form required this
+confirmation: “Email me once when GmailSmith is available.” That consent is for
+one availability email only, not a newsletter or ongoing product marketing.
+We did not send a confirmation email when someone joined. The public download
+is now available and waitlist intake is closed. As of November 1, 2026, the
+consented addresses have not been exported or sent a notice; they remain in D1
+under the retention terms below.
 
 The waitlist Worker stores this information in a Cloudflare D1 database. The
 Worker does not store your IP address. Cloudflare may process ordinary network
 information while providing website hosting, Turnstile bot protection, and
 security. To rate-limit signups, the Worker also derives a SHA-256 digest from
 the normalized email address; it does not save that digest in D1 or log it.
-The form's Turnstile token is checked by Cloudflare before the address is
-saved. If you ask us to remove your address before launch, email
-support@gmailsmith.app; we will remove it from the waitlist database, any
-email-delivery provider in use, and any temporary export still in our control.
+The form's Turnstile token was checked by Cloudflare before the address was
+saved. You may ask us to remove your address at any time by emailing
+support@gmailsmith.app; we will remove it from D1 and any provider list or
+temporary export that exists.
 
-If GmailSmith has not become publicly available, our daily cleanup is scheduled
-to delete waitlist entries by the 12-month retention limit. When downloads
-open, we may transfer the addresses
-of people who asked for the notice to Resend (or another email-delivery
-provider) to send that one availability email. We temporarily create a CSV
-export for that transfer and delete it after the provider import is verified.
-We delete the provider list and waitlist database entries within 30 days after
-sending. We do not use this waitlist consent for newsletters, unrelated
-promotions, or recurring marketing. A separate opt-in would be needed for those
-messages.
+Entries without a recorded notice are deleted after 12 months through the
+Worker's daily cleanup. If the one-time notice is later sent, we may transfer
+the addresses of people who requested it to an email-delivery provider. No
+provider is currently configured and no export has been made. Any temporary
+CSV will be deleted after the provider import is verified; the provider list
+and corresponding D1 records will be deleted within 30 days after sending.
+This consent is not used for newsletters, unrelated promotions, or recurring
+marketing. A separate opt-in would be needed for those messages.
 
 ### Gmail connection and Google user data
 
@@ -103,11 +103,12 @@ with the parties listed here:
 
 The GmailSmith desktop app stores the connected sender address and OAuth
 tokens on your computer. The app does not upload Gmail mailbox data, sender
-tokens, recipient lists, or message content to the GmailSmith website or to the
-developer. Cloudflare website hosting, the waitlist, Resend (if used for the
-one-time availability notice), licence-validation providers, and font or
-script providers do not receive Gmail sender data from the app. Account
-deletion sends a freshly authenticated Firebase ID token to Firebase itself;
+tokens, recipient lists, or message content to the GmailSmith website or the
+developer. Cloudflare website hosting, the waitlist, an email provider if
+configured for the one-time availability notice, licence-validation providers,
+and font or script providers do not receive Gmail sender data from the app.
+
+Account deletion sends a freshly authenticated Firebase ID token to Firebase;
 it does not send local campaigns or sender credentials. These services may
 receive the separate information described in this policy for their own
 functions. If you choose to send information to support yourself, only the
@@ -179,7 +180,7 @@ The app does not include advertising, analytics, or crash-reporting services.
 | Google Firebase Authentication | GmailSmith account registration and sign-in |
 | Google (OAuth and Gmail API/SMTP) | Identify the selected Google account and deliver the emails you send |
 | Cloudflare, website host, Turnstile provider and D1 provider | Serve the public site and validate/store the one-time availability waitlist. They do not receive Gmail sender credentials, recipient lists or message content from the desktop app. |
-| Resend, if used for launch notice delivery | Import and deliver the one-time availability email to people who requested it |
+| Email campaign provider, if configured | Import and deliver the one-time availability email to people who requested it; none is configured as of November 1, 2026 |
 | Licence provider, if you activate a key | Validate the key and its plan status |
 | Public font and script providers | Load interface resources |
 

@@ -1,5 +1,10 @@
 # GmailSmith availability notice
 
+**Draft only.** The public beta is available, but as of 2026-11-01 no provider
+account is configured, no waitlist addresses have been exported, and this
+message has not been sent. Use only once for the addresses that consented to
+the availability notice.
+
 **Subject:** GmailSmith is ready to download
 
 Hi,
