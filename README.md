@@ -65,8 +65,11 @@ availability email has been sent because no campaign-provider account is
 configured. See `waitlist-worker/README.md` before resuming the one-time notice
 process. The app repo remains the source of truth for the legal pages mirrored
 at `/privacy`, `/terms`, and `/refund-policy`. Paddle is the intended payment
-provider; the refund policy and contact page are ready for its domain review,
+provider; the refund policy and contact page are live for its domain review,
 but checkout remains disabled until the account and fulfilment are ready.
+Paddle Billing does not generate licence keys; the app's current adapters
+cover only Lemon Squeezy and Gumroad, so paid checkout needs a Worker-issued
+key or account-linked entitlement. See `gmail-merge/docs/08` §8.3.
 
 The waitlist Worker, Turnstile, D1, and site build pipeline are configured and
 deployed. Its setup instructions below remain useful if the service is
