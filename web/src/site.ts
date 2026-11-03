@@ -1,8 +1,8 @@
 // Single source of truth for the site's copy and links.
 // Per-tier checkoutMonthly / checkoutYearly URLs (plus the site-wide
-// purchaseUrl fallback) flip from '' to the Lemon Squeezy variant checkout
-// links when the store exists (docs/08 §8.3, P5 checklist). Public acquisition
-// copy and CTAs follow the availability setting below.
+// purchaseUrl fallback) flip from '' to the Paddle checkout links when the
+// store is approved (docs/08 §8.3, P5 checklist). Public acquisition copy and
+// CTAs follow the availability setting below.
 export const site = {
   name: 'GmailSmith',
   url: 'https://gmailsmith.app',
@@ -17,6 +17,8 @@ export const site = {
   },
   supportEmail: 'support@gmailsmith.app',
   purchaseUrl: '',
+  refundPolicyUrl: '/refund-policy',
+  contactUrl: '/contact',
   availability: 'download' as 'waitlist' | 'download',
   waitlistConsentVersion: 'v1',
   version: '1.0.2',

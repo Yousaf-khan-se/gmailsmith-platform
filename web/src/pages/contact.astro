@@ -1,0 +1,129 @@
+---
+// Public contact page for support, billing, refunds, and privacy questions.
+import Base from '../layouts/Base.astro';
+import { site } from '../site';
+---
+
+<Base title="Contact" path="/contact"
+      description="Contact GmailSmith support for account, billing, refund, privacy, or technical questions.">
+  <article class="container contact">
+    <h1>Contact GmailSmith</h1>
+    <p class="lead">
+      Questions about GmailSmith, billing, refunds, privacy, or a technical
+      problem? Email
+      <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a> or use the
+      form below. We aim to reply within two business days.
+    </p>
+
+    <form id="contact-form" data-support-email={site.supportEmail}
+          action={`mailto:${site.supportEmail}`} method="post" enctype="text/plain">
+      <div class="field">
+        <label for="contact-name">Your name</label>
+        <input id="contact-name" name="name" type="text" autocomplete="name" required />
+      </div>
+
+      <div class="field">
+        <label for="contact-email">Your email</label>
+        <input id="contact-email" name="email" type="email" autocomplete="email" required />
+      </div>
+
+      <div class="field">
+        <label for="contact-topic">Topic</label>
+        <select id="contact-topic" name="topic" required>
+          <option value="Account">Account</option>
+          <option value="Billing or refund">Billing or refund</option>
+          <option value="Technical support">Technical support</option>
+          <option value="Privacy">Privacy</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="contact-message">Message</label>
+        <textarea id="contact-message" name="message" rows="7" required></textarea>
+      </div>
+
+      <button class="btn btn-primary" type="submit">Open email draft</button>
+      <p class="hint">
+        This form opens your email app with the message ready to send. If that
+        does not work, email
+        <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a> directly.
+      </p>
+    </form>
+
+    <section class="notes">
+      <h2>Before you write</h2>
+      <ul>
+        <li>
+          For billing or refund requests, include the email used for the
+          purchase and your Paddle order or invoice number.
+        </li>
+        <li>Do not send card numbers, passwords, or other payment credentials.</li>
+        <li>
+          Refunds and cancellations are handled under our
+          <a href={site.refundPolicyUrl}>Refund &amp; Cancellation Policy</a>.
+        </li>
+        <li>
+          Read our <a href="/privacy">Privacy Policy</a> and
+          <a href="/terms">Terms of Service</a>.
+        </li>
+      </ul>
+      <p class="dim">
+        GmailSmith is operated by an individual developer based in Lahore,
+        Punjab, Pakistan.
+      </p>
+    </section>
+  </article>
+
+  <style>
+    .contact { max-width: 760px; padding: 56px 24px; }
+    .contact h1 { font-size: clamp(26px, 4vw, 36px); margin: 0 0 18px; }
+    .contact h2 { font-size: 21px; margin-top: 38px; }
+    .lead { color: var(--text-muted); font-size: 16px; }
+    .field { margin-top: 18px; }
+    .field label {
+      display: block; margin-bottom: 6px; color: var(--text);
+      font-size: 14px; font-weight: 600;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%; box-sizing: border-box;
+      background: var(--surface); color: var(--text);
+      border: 1px solid var(--border); border-radius: 9px;
+      padding: 11px 12px; font: inherit; font-size: 15px;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: 2px solid var(--accent); outline-offset: 1px;
+    }
+    .field textarea { resize: vertical; }
+    button { margin-top: 20px; }
+    .hint, .dim { color: var(--text-dim); font-size: 13.5px; }
+    .notes { margin-top: 8px; }
+    .notes ul { color: var(--text-muted); font-size: 15px; padding-left: 20px; }
+    .notes li { margin: 8px 0; }
+  </style>
+
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    if (form) {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const data = new FormData(form);
+        const name = String(data.get('name') ?? '').trim();
+        const email = String(data.get('email') ?? '').trim();
+        const topic = String(data.get('topic') ?? '').trim();
+        const message = String(data.get('message') ?? '').trim();
+        const supportEmail = form.dataset.supportEmail ?? '';
+        const subject = `[GmailSmith] ${topic}`;
+        const body = [
+          `Name: ${name}`,
+          `Email: ${email}`,
+          `Topic: ${topic}`,
+          '',
+          message,
+        ].join('\n');
+        window.location.href =
+          `mailto:${supportEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      });
+    }
+  </script>
+</Base>

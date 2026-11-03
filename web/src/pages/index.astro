@@ -173,6 +173,11 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
             : 'The Free plan is available now. Paid plans are coming soon.'}
         </p>
       )}
+      <p class="store-note">
+        Refunds and cancellations are covered by our
+        <a href={site.refundPolicyUrl}>Refund &amp; Cancellation Policy</a>,
+        including the 30-day money-back guarantee on a first paid charge.
+      </p>
     </div>
   </section>
 
@@ -208,8 +213,15 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
         <details>
           <summary>Can I buy a paid plan today?</summary>
           <p>{site.availability === 'waitlist'
-            ? 'No. Public downloads and paid plans are not available yet. We do not have a release date yet.'
-            : 'Not yet. We will share billing and cancellation details before paid plans become available.'}</p>
+            ? 'No. Public downloads and paid plans are not available yet. We do not have a release date yet. Planned refund and cancellation terms are in our '
+            : 'Not yet. Paid plans will be sold through Paddle, our Merchant of Record. Billing, renewal, cancellation, and refund terms are in our '}
+            <a href={site.refundPolicyUrl}>Refund &amp; Cancellation Policy</a>.</p>
+        </details>
+        <details>
+          <summary>What is the refund policy?</summary>
+          <p>Paid plans are covered by a 30-day money-back guarantee on the
+            first paid charge and a 14-day refund window on renewals. Read the
+            <a href={site.refundPolicyUrl}>Refund &amp; Cancellation Policy</a>.</p>
         </details>
         {site.availability === 'waitlist' && (
           <details>

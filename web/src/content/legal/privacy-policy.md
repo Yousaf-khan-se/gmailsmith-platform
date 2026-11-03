@@ -1,6 +1,6 @@
 # GmailSmith — Privacy Policy
 
-**Last updated: November 1, 2026**
+**Last updated: November 3, 2026**
 
 ## The short version
 
@@ -12,8 +12,10 @@ Google through Gmail for delivery.
 
 To sign in to GmailSmith, Google Firebase Authentication processes your account
 identity. To connect Gmail for sending, GmailSmith requests the Gmail
-send-only permission. This policy explains what is sent, where it is stored,
-and how to delete your GmailSmith account and this computer's local data.
+send-only permission. If you purchase a paid plan, Paddle.com processes the
+payment as Merchant of Record; GmailSmith does not receive your card details.
+This policy explains what is sent, where it is stored, and how to delete your
+GmailSmith account and this computer's local data.
 
 ## Information and where it is stored
 
@@ -35,6 +37,21 @@ consent or send product-update emails. Use **Settings → Delete GmailSmith
 account** to delete your Firebase account after reauthentication. Your local
 campaigns, CSVs, senders and history remain on this computer and are available
 after another account signs in here.
+
+### Paid plans and payment data
+
+If you purchase a paid plan, Paddle.com processes the payment as our Merchant
+of Record. Paddle collects the name, email address, billing address, payment
+method details, tax information, and transaction data needed to process the
+order, invoice you, calculate and remit applicable taxes, prevent fraud, and
+handle refunds. Paddle is an independent controller of that payment data and
+processes it under its own privacy notice.
+
+GmailSmith does not receive or store your card number or other payment
+credentials. We receive the information needed to provide your plan, such as
+your account email, plan, subscription status, and renewal or refund status.
+Refunds and cancellations are governed by our
+[Refund & Cancellation Policy](https://gmailsmith.app/refund-policy).
 
 ### Website availability waitlist
 
@@ -150,7 +167,7 @@ as sensitive and delete any copies you control.
 
 ## Other network connections
 
-The app makes network connections for these functions:
+The app and website make network connections for these functions:
 
 - **Account sign-in:** Google Firebase Authentication processes your account
   identity and authentication requests.
@@ -167,6 +184,10 @@ The app makes network connections for these functions:
   and a random installation identifier to the licence provider associated with
   that key. The provider returns the licence status. The app does not send
   recipient lists or message content for licence validation.
+- **Paid-plan checkout (website):** If you purchase a paid plan on the website,
+  Paddle Checkout and the Paddle customer portal process your payment and
+  billing data. Paddle receives the information described under “Paid plans and
+  payment data” above. GmailSmith does not receive your card details.
 - **Interface resources:** The app may request fonts and a Socket.IO client
   library from their public providers to display and operate the interface.
   Those providers may receive ordinary network connection information.
@@ -179,13 +200,58 @@ The app does not include advertising, analytics, or crash-reporting services.
 | :--- | :--- |
 | Google Firebase Authentication | GmailSmith account registration and sign-in |
 | Google (OAuth and Gmail API/SMTP) | Identify the selected Google account and deliver the emails you send |
+| Paddle.com (Paddle) | Process paid-plan payments, billing, taxes, invoicing, and refunds; Paddle is the Merchant of Record. Paddle processes payment data under its [privacy notice](https://www.paddle.com/legal/privacy). |
 | Cloudflare, website host, Turnstile provider and D1 provider | Serve the public site and validate/store the one-time availability waitlist. They do not receive Gmail sender credentials, recipient lists or message content from the desktop app. |
 | Email campaign provider, if configured | Import and deliver the one-time availability email to people who requested it; none is configured as of November 1, 2026 |
 | Licence provider, if you activate a key | Validate the key and its plan status |
 | Public font and script providers | Load interface resources |
 
 These providers process information under their own terms and privacy
-policies. GmailSmith does not control their independent processing.
+policies. Some of them process data outside your country under their own
+transfer safeguards. GmailSmith does not control their independent processing.
+
+## Controller and legal bases
+
+GmailSmith is the controller for the personal data it processes for the app and
+website. Paddle acts as an independent controller for payment data processed
+through its checkout.
+
+We process personal data:
+
+- to perform our contract with you, including account sign-in, providing the
+  app, and fulfilling a paid plan;
+- for our legitimate interests in operating a secure, reliable service and
+  responding to support requests;
+- with your consent, for the one-time availability waitlist; and
+- to comply with legal obligations, including tax and accounting records.
+
+Where we rely on consent, you can withdraw it at any time. Withdrawing consent
+does not affect processing that happened before the withdrawal. We do not sell
+personal data or use it for advertising.
+
+## Your rights
+
+Depending on where you live, you may have the right to:
+
+- access the personal data we hold about you;
+- correct inaccurate data;
+- delete data we no longer need;
+- restrict or object to processing;
+- receive a portable copy of data you provided;
+- withdraw consent where we rely on it; and
+- complain to your local data-protection authority.
+
+Contact support@gmailsmith.app to exercise a right. We may need to verify your
+identity. We will respond within the time required by applicable law. These
+rights do not apply where an exception applies, and they do not affect data
+that Paddle or Google process under their own policies.
+
+## Cookies
+
+The GmailSmith website does not use advertising or analytics cookies.
+Cloudflare, which hosts the site and provides Turnstile bot protection, and
+Paddle, which hosts checkout, may process technical information or set cookies
+when you use their services. Their privacy notices explain that processing.
 
 ## Your responsibilities and choices
 
@@ -219,6 +285,8 @@ legal responsibilities.
 We retain local data on your device until you delete it. Google retains
 account and authentication information under its service terms and until the
 Firebase account is deleted, subject to any legal retention requirements.
+Paddle retains payment, invoice, and tax records under its own legal
+obligations. GmailSmith does not store card data.
 
 ## Security
 
@@ -250,5 +318,7 @@ GmailSmith is developed and operated by an individual developer based in
 Lahore, Punjab, Pakistan; it is not a registered company.
 
 **Email:** support@gmailsmith.app
+
+**Contact page:** https://gmailsmith.app/contact
 
 **Website:** https://gmailsmith.app
