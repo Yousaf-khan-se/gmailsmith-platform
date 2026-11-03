@@ -11,7 +11,8 @@ const { Content } = await render(entry);
 ---
 
 <Base title="Terms of Service" path="/terms"
-      description="Licensing, Paddle payment and subscription terms, refunds, customer responsibilities and liability limits for GmailSmith.">
+      description="Licensing, Paddle payment and subscription terms, refunds, customer responsibilities and liability limits for GmailSmith."
+      breadcrumbs={[{ name: 'Terms of Service', path: '/terms' }]}>
   <article class="container doc">
     <Content />
   </article>

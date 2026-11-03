@@ -6,9 +6,10 @@ import { site } from '../site';
 ---
 
 <Base
-  title="Install help — Windows SmartScreen"
-  description="Windows shows ‘Windows protected your PC’ for every new, unsigned installer. Here is exactly why — and the two clicks to proceed safely."
+  title="Install GmailSmith on Windows — SmartScreen Help"
+  description="Windows shows ‘Windows protected your PC’ for new, unsigned installers. Here is why it appears and how to install GmailSmith safely."
   path="/install"
+  breadcrumbs={[{ name: 'Install help', path: '/install' }]}
 >
   <article class="container doc">
     {site.availability === 'waitlist' && (
@@ -39,7 +40,7 @@ import { site } from '../site';
         <p>The dialog expands to reveal the file name and a <strong>Run anyway</strong> button.</p>
         <img src="/images/windows-warnings/step1-click-more-info.jpeg"
              alt="SmartScreen dialog with More info highlighted"
-             width="560" loading="lazy" />
+             width="560" height="515" loading="lazy" />
       </li>
       <li>
         <h3>Click “Run anyway”</h3>
@@ -47,7 +48,7 @@ import { site } from '../site';
           rights and installs just for you.</p>
         <img src="/images/windows-warnings/step2-click-run-anyway.jpeg"
              alt="SmartScreen dialog with Run anyway highlighted"
-             width="560" loading="lazy" />
+             width="560" height="521" loading="lazy" />
       </li>
     </ol>
 

@@ -4,10 +4,16 @@
 // manifest when site.availability is set to 'download'.
 import Base from '../layouts/Base.astro';
 import { site, pricing } from '../site';
+import { softwareApplicationSchema } from '../lib/seo';
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
 ---
 
-<Base title={site.name} path="/">
+<Base
+  title="Mail Merge for Gmail from CSV — Free Windows App"
+  description="Free Windows mail merge for Gmail. Send personalized emails from a CSV — no extension, no Google Workspace, and your recipient list stays on your PC."
+  path="/"
+  schema={softwareApplicationSchema()}
+>
   <section style="padding: 88px 0 64px;">
     <div class="container hero">
       <p class="eyebrow">

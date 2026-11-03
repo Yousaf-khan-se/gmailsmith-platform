@@ -7,14 +7,14 @@ export const site = {
   name: 'GmailSmith',
   url: 'https://gmailsmith.app',
   tagline: 'Desktop mail merge for Gmail',
-  get description() {
-    const product =
-      'GmailSmith is a Windows mail merge app for Gmail. Personalize messages ' +
-      'from CSV rows while keeping your recipient list on your computer.';
-    return this.availability === 'waitlist'
-      ? `${product} Join the waitlist for one availability email.`
-      : `${product} Download GmailSmith for Windows.`;
-  },
+  // Keep the default description at or below 155 characters so Google does
+  // not truncate it. Page-level descriptions can be more specific.
+  description:
+    'GmailSmith is a Windows desktop mail merge app for Gmail. Personalize ' +
+    'messages from a CSV while your recipient list stays on your computer.',
+  ogImage: '/og-image.png',
+  ogImageAlt: 'GmailSmith — mail merge for Gmail from a CSV on Windows',
+  themeColor: '#100e0b',
   supportEmail: 'support@gmailsmith.app',
   purchaseUrl: '',
   refundPolicyUrl: '/refund-policy',

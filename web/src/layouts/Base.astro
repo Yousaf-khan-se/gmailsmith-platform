@@ -1,18 +1,55 @@
 ---
-// Shared page shell: SEO meta, brand chrome, legal footer.
-// Every page renders through this so title/description/canonical stay
-// consistent — the SEO foundation docs/08 §8.6 chose Astro for.
+// Shared page shell: SEO meta, structured data, brand chrome, legal footer.
+// Every page renders through this so title/description/canonical, social
+// cards, breadcrumbs, and JSON-LD stay consistent.
 import { site } from '../site';
+import {
+  absoluteUrl,
+  breadcrumbSchema,
+  jsonLd,
+  organizationSchema,
+  websiteSchema,
+  type Crumb,
+  type JsonLd,
+} from '../lib/seo';
 
 interface Props {
   title: string;
   description?: string;
   path?: string;
   noindex?: boolean;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
+  ogImageAlt?: string;
+  breadcrumbs?: Crumb[];
+  schema?: JsonLd | JsonLd[];
 }
-const { title, description = site.description, path = '/', noindex = false } = Astro.props;
+const {
+  title,
+  description = site.description,
+  path = '/',
+  noindex = false,
+  ogType = 'website',
+  ogImage = site.ogImage,
+  ogImageAlt = site.ogImageAlt,
+  breadcrumbs = [],
+  schema = [],
+} = Astro.props;
 const fullTitle = title === site.name ? `${site.name} — ${site.tagline}` : `${title} · ${site.name}`;
 const canonical = new URL(path, site.url).toString();
+const socialImage = absoluteUrl(ogImage);
+const pageSchema = Array.isArray(schema) ? schema : [schema];
+const structuredData = noindex
+  ? []
+  : [
+      organizationSchema(),
+      ...(path === '/' ? [websiteSchema()] : []),
+      ...(breadcrumbs.length > 0 ? [breadcrumbSchema(breadcrumbs)] : []),
+      ...pageSchema,
+    ];
+const robotsContent = noindex
+  ? 'noindex,follow'
+  : 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1';
 ---
 
 <!doctype html>
@@ -22,14 +59,29 @@ const canonical = new URL(path, site.url).toString();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={robotsContent} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex,follow" />}
-    <meta property="og:type" content="website" />
+    <meta name="application-name" content={site.name} />
+    <meta name="theme-color" content={site.themeColor} />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+    {structuredData.map((data) => (
+      <script type="application/ld+json" is:inline set:html={jsonLd(data)} />
+    ))}
     <link rel="icon" type="image/png" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <style is:global>
@@ -119,6 +171,16 @@ const canonical = new URL(path, site.url).toString();
       }
       .site-footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       .site-footer a { color: var(--text-muted); }
+
+      .breadcrumbs { padding-top: 18px; font-size: 13px; color: var(--text-dim); }
+      .breadcrumbs ol {
+        list-style: none; display: flex; flex-wrap: wrap; align-items: center;
+        gap: 8px; margin: 0; padding: 0;
+      }
+      .breadcrumbs li { display: flex; align-items: center; gap: 8px; }
+      .breadcrumbs li + li::before { content: '/'; color: var(--border); }
+      .breadcrumbs a { color: var(--text-muted); }
+      .breadcrumbs [aria-current='page'] { color: var(--text); }
       @media (max-width: 560px) {
         .site-header .container { padding-inline: 16px; }
         .brand { gap: 7px; }
@@ -151,6 +213,21 @@ const canonical = new URL(path, site.url).toString();
         </nav>
       </div>
     </header>
+
+    {breadcrumbs.length > 0 && (
+      <nav class="breadcrumbs container" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Home</a></li>
+          {breadcrumbs.map((crumb, index) => (
+            <li>
+              {index === breadcrumbs.length - 1
+                ? <span aria-current="page">{crumb.name}</span>
+                : <a href={crumb.path}>{crumb.name}</a>}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
 
     <slot />
 

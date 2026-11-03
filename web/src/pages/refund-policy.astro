@@ -10,8 +10,9 @@ if (!entry) throw new Error('refund-policy.md missing from src/content/legal');
 const { Content } = await render(entry);
 ---
 
-<Base title="Refund Policy" path="/refund-policy"
-      description="GmailSmith's 30-day first-charge guarantee, 14-day renewal window, cancellation rules, and Paddle refund process.">
+<Base title="Refund & Cancellation Policy" path="/refund-policy"
+      description="GmailSmith's 30-day first-charge guarantee, 14-day renewal window, cancellation rules, and Paddle refund process."
+      breadcrumbs={[{ name: 'Refund & Cancellation Policy', path: '/refund-policy' }]}>
   <article class="container doc">
     <Content />
   </article>
